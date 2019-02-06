@@ -1,0 +1,221 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "An infinite, widely customizable matrix code rain for your desktop.",
+	"file" : "index.html",
+	"general" : 
+	{
+		"localization" : 
+		{
+			"de-de" : 
+			{
+				"ui_appearance_backgroundcolor" : "Hintergrundfarbe",
+				"ui_appearance_fontcolor" : "Schriftfarbe",
+				"ui_appearance_fontcolorhighlight" : "Schriftfarbe Highlight",
+				"ui_appearance_fontcolorshowoff" : "Schriftfarbe Showoff",
+				"ui_appearance_heading" : "<h3>Darstellung</h3>",
+				"ui_character_fontsize" : "Schriftgröße",
+				"ui_character_heading" : "<h3>Zeicheneinstellungen</h3>",
+				"ui_movementbehaviour_heading" : "<h3>Bewegungsverhalten</h3>",
+				"ui_movementbehaviour_changecharsrandomly": "Zeichen zufällig austauschen",
+				"ui_movementbehaviour_columnalphafade": "Regentropfen abschwächen",
+				"ui_movementbehaviour_fps" : "Maximale FPS",
+				"ui_movementbehaviour_rain_drop_factor" : "Regentropfenlänge<br>(% von Bildschirmhöhe)",
+				"ui_character_textprefs_subheading": "<b>Zeichensets</b>",
+				"ui_character_textprefs_cyrillic": "Kyrillische Zeichen:",
+				"ui_character_textprefs_letterslowercase": "Kleinbuchstaben:",
+				"ui_character_textprefs_lettersuppercase": "Großbuchstaben:",
+				"ui_character_textprefs_nosetselected": "<i>Hinweis: Fallbackset \"?\" wird benutzt.</i>",
+				"ui_character_textprefs_numbers": "Zahlen:",
+				"ui_character_textprefs_specialchars": "Sonderzeichen:"
+			},
+			"en-us" : 
+			{
+				"ui_appearance_backgroundcolor" : "Background color",
+				"ui_appearance_fontcolor" : "Font color",
+				"ui_appearance_fontcolorhighlight" : "Font color highlight",
+				"ui_appearance_fontcolorshowoff" : "Font color showoff",
+				"ui_appearance_heading" : "<h3>Appearance</h3>",
+				"ui_character_fontsize" : "Font size",
+				"ui_character_heading" : "<h3>Character Settings</h3>",
+				"ui_movementbehaviour_heading" : "<h3>Movement Behaviour</h3>",
+				"ui_movementbehaviour_changecharsrandomly": "Change characters randomly",
+				"ui_movementbehaviour_columnalphafade": "Fade out rain drops",
+				"ui_movementbehaviour_fps" : "Max FPS",
+				"ui_movementbehaviour_rain_drop_factor" : "Rain drop length<br>(% of screen height)",
+				"ui_character_textprefs_subheading": "<b>Character sets</b>",
+				"ui_character_textprefs_cyrillic": "Cyrillic letters:",
+				"ui_character_textprefs_letterslowercase": "Letters lower case:",
+				"ui_character_textprefs_lettersuppercase": "Letters upper case:",
+				"ui_character_textprefs_nosetselected": "<i>Note: Fallback set \"?\" is being used.</i>",
+				"ui_character_textprefs_numbers": "Numbers:",
+				"ui_character_textprefs_specialchars": "Special characters:",
+				"ui_z_version" : "<i><br>Version 0.4.0 | 2019-01-23</i>"
+			}
+		},
+		"properties" : 
+		{
+			"appearance_backgroundcolor" : 
+			{
+				"order" : 111,
+				"text" : "ui_appearance_backgroundcolor",
+				"type" : "color",
+				"value" : "0 0 0"
+			},
+			"appearance_fontcolor" : 
+			{
+				"order" : 112,
+				"text" : "ui_appearance_fontcolor",
+				"type" : "color",
+				"value" : "0.2 1 0.67"
+			},
+			"appearance_fontcolorhighlight" : 
+			{
+				"order" : 113,
+				"text" : "ui_appearance_fontcolorhighlight",
+				"type" : "color",
+				"value" : "1 1 1"
+			},
+			"appearance_fontcolorshowoff" : 
+			{
+				"order" : 114,
+				"text" : "ui_appearance_fontcolorshowoff",
+				"type" : "color",
+				"value" : "0.47 0.47 0.47"
+			},
+			"appearance_heading" : 
+			{
+				"order" : 100,
+				"text" : "ui_appearance_heading",
+				"type" : "text",
+				"value" : ""
+			},
+			"character_fontsize" : 
+			{
+				"editable" : true,
+				"max" : 25,
+				"min" : 5,
+				"order" : 211,
+				"text" : "ui_character_fontsize",
+				"type" : "slider",
+				"value" : 14
+			},
+			"character_textprefs_subheading" : 
+			{
+				"order" : 220,
+				"text" : "ui_character_textprefs_subheading",
+				"type" : "text",
+				"value" : ""
+			},
+			"character_textprefs_cyrillic" : 
+			{
+				"order" : 225,
+				"text" : "ui_character_textprefs_cyrillic",
+				"type" : "bool",
+				"value" : true
+			},
+			"character_textprefs_letterslowercase" : 
+			{
+				"order" : 221,
+				"text" : "ui_character_textprefs_letterslowercase",
+				"type" : "bool",
+				"value" : true
+			},
+			"character_textprefs_lettersuppercase" : 
+			{
+				"order" : 222,
+				"text" : "ui_character_textprefs_lettersuppercase",
+				"type" : "bool",
+				"value" : true
+			},
+			"character_textprefs_nosetselected": {
+				"condition": "!character_textprefs_letterslowercase.value && !character_textprefs_lettersuppercase.value && !character_textprefs_numbers.value && !character_textprefs_specialchars.value && !character_textprefs_cyrillic.value",
+				"order": 226,
+				"text": "ui_character_textprefs_nosetselected",
+				"type" : "text",
+				"value": ""
+			},
+			"character_textprefs_numbers" : 
+			{
+				"order" : 223,
+				"text" : "ui_character_textprefs_numbers",
+				"type" : "bool",
+				"value" : true
+			},
+			"character_textprefs_specialchars" : 
+			{
+				"order" : 224,
+				"text" : "ui_character_textprefs_specialchars",
+				"type" : "bool",
+				"value" : true
+			},
+			"character_heading" : 
+			{
+				"order" : 200,
+				"text" : "ui_character_heading",
+				"type" : "text",
+				"value" : ""
+			},
+			"movementbehaviour_heading" : 
+			{
+				"order" : 300,
+				"text" : "ui_movementbehaviour_heading",
+				"type" : "text",
+				"value" : ""
+			},
+			"movementbehaviour_changecharsrandomly" : 
+			{
+				"order" : 311,
+				"text" : "ui_movementbehaviour_changecharsrandomly",
+				"type" : "bool",
+				"value" : true
+			},
+			"movementbehaviour_columnalphafade" : 
+			{
+				"order" : 312,
+				"text" : "ui_movementbehaviour_columnalphafade",
+				"type" : "bool",
+				"value" : true
+			},
+			"movementbehaviour_fps" : 
+			{
+				"editable" : true,
+				"max" : 60,
+				"min" : 1,
+				"order" : 313,
+				"text" : "ui_movementbehaviour_fps",
+				"type" : "slider",
+				"value" : 24
+			},
+			"movementbehaviour_rain_drop_factor" : 
+			{
+				"editable" : true,
+				"max" : 125,
+				"min" : 25,
+				"order" : 314,
+				"text" : "ui_movementbehaviour_rain_drop_factor",
+				"type" : "slider",
+				"value" : 75
+			},
+			"schemecolor" : 
+			{
+				"order" : 115,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.2 1 0.67"
+			},
+			"z_version" : 
+			{
+				"order" : 1011,
+				"text" : "ui_z_version",
+				"type" : "text",
+				"value" : ""
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"tags" : [ "Technology" ],
+	"title" : "The Matrix Rain",
+	"type" : "web",
+	"visibility" : "public",
+	"workshopid" : "1418165087"
+}
