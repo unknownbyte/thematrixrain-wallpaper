@@ -63,7 +63,7 @@ const MatrixRenderer = function (initOptions = {}) {
     function randomTextCol(isInit = false) {
         return {
             data: randomTextFromRange(render.count.rows, render.textRange),
-            delayedLoops: Math.floor(Math.random() * 100) % (isInit ? 75 : 40),
+            delayedLoops: Math.floor(Math.random() * 140) % (isInit ? 135 : 40),
             loops: 0,
             dropLength: Math.floor(render.count.rows * options.textFactor)
         };
@@ -212,6 +212,8 @@ const MatrixRenderer = function (initOptions = {}) {
             console.log("Stopping MatrixRenderer...");
             window.cancelAnimationFrame(render.rafID);
             render.ctx.clearRect(0, 0, options.canvasElement.width, options.canvasElement.height);
+            render.ctx = null;
+            render.isPaused = false;
         }
     }
 

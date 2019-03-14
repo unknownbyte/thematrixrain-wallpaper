@@ -51,7 +51,7 @@
 				"ui_movementbehaviour_rain_drop_factor" : "Rain drop length<br>(% of screen height)",
 				"ui_z_heading" : "<br>--- --- --- --- ---",
 				"ui_z_scode_chlogs" : "<a href='https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087'>Changelog</a> | <a href='https://github.com/unknownbyte/thematrixrain-wallpaper'>Source code</a>",
-				"ui_z_version" : "<i>Version 0.4.1 | 2019-02-06</i>"
+				"ui_z_version" : "<i>Version 0.4.2 | 2019-03-14</i>"
 			}
 		},
 		"properties" : 
