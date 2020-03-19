@@ -1,6 +1,6 @@
 {
 	"contentrating" : "Everyone",
-	"description" : "An infinite, widely customizable matrix code rain for your desktop.\r\n\r\n[h1]Features[/h1]\r\n[list]\r\n    [*]Customize the style of both back- and foreground\r\n    [*]Choose from different character sets like Latin, Numbers, Special Characters, Cyrillic, ...\r\n    [*]Set the speed and size of the rain\r\n    [*]Fade out rain drops\r\n[/list]\r\n\r\nIf you experience any problems with this wallpaper or you have a feature request, feel free to comment!\r\n\r\n--- --- --- --- ---\r\n[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087]Changelog[/url] | [url=https://github.com/unknownbyte/thematrixrain-wallpaper]Source code[/url]",
+	"description" : "An infinite, widely customizable matrix code rain for your desktop.\n\n[h1]Features[/h1]\n[list]\n    [*]Customize the style of both back- and foreground\n    [*]Choose from different character sets like Latin, Numbers, Special Characters, Cyrillic, ...\n    [*]Set the speed and size of the rain\n    [*]Set font family of the rain\n    [*]Fade out rain drops\n[/list]\n\nIf you experience any problems with this wallpaper or you have a feature request, feel free to comment!\n\n--- --- --- --- ---\n[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087]Changelog[/url] | [url=https://github.com/unknownbyte/thematrixrain-wallpaper]Source code[/url]",
 	"file" : "index.html",
 	"general" : 
 	{
@@ -13,13 +13,18 @@
 				"ui_appearance_fontcolorhighlight" : "Schriftfarbe Highlight",
 				"ui_appearance_fontcolorshowoff" : "Schriftfarbe Showoff",
 				"ui_appearance_heading" : "<h3>Darstellung</h3>",
+				"ui_character_fontfamily" : "Schriftart",
 				"ui_character_fontsize" : "Schriftgröße",
+				"ui_character_fontsize_note" : "<i>Hinweis: Die ausgewählte Schriftgröße kann zu Performance-Problemen führen, speziell bei älteren und schwachen PCs.</i><br><br>",
 				"ui_character_heading" : "<h3>Zeicheneinstellungen</h3>",
+				"ui_character_textprefs_binary" : "Binär (0-1):",
 				"ui_character_textprefs_cyrillic" : "Kyrillische Zeichen:",
+				"ui_character_textprefs_hex" : "Hexadezimal (0-9 & A-F):",
 				"ui_character_textprefs_letterslowercase" : "Kleinbuchstaben:",
 				"ui_character_textprefs_lettersuppercase" : "Großbuchstaben:",
 				"ui_character_textprefs_nosetselected" : "<i>Hinweis: Fallbackset \"?\" wird benutzt.</i>",
-				"ui_character_textprefs_numbers" : "Zahlen:",
+				"ui_character_textprefs_numbers" : "Zahlen (0-9):",
+				"ui_character_textprefs_octal" : "Oktal (0-7):",
 				"ui_character_textprefs_specialchars" : "Sonderzeichen:",
 				"ui_character_textprefs_subheading" : "<b>Zeichensets</b>",
 				"ui_movementbehaviour_changecharsrandomly" : "Zeichen zufällig austauschen",
@@ -35,13 +40,18 @@
 				"ui_appearance_fontcolorhighlight" : "Font color highlight",
 				"ui_appearance_fontcolorshowoff" : "Font color showoff",
 				"ui_appearance_heading" : "<h3>Appearance</h3>",
+				"ui_character_fontfamily" : "Font family",
 				"ui_character_fontsize" : "Font size",
+				"ui_character_fontsize_note" : "<i>Note: Your selected font size may cause performance issues, especially on older or low-end PCs.</i><br><br>",
 				"ui_character_heading" : "<h3>Character Settings</h3>",
+				"ui_character_textprefs_binary" : "Binary (0-1):",
 				"ui_character_textprefs_cyrillic" : "Cyrillic letters:",
+				"ui_character_textprefs_hex" : "Hexadecimal (0-9 & A-F):",
 				"ui_character_textprefs_letterslowercase" : "Letters lower case:",
 				"ui_character_textprefs_lettersuppercase" : "Letters upper case:",
 				"ui_character_textprefs_nosetselected" : "<i>Note: Fallback set \"?\" is being used.</i>",
-				"ui_character_textprefs_numbers" : "Numbers:",
+				"ui_character_textprefs_numbers" : "Numbers (0-9):",
+				"ui_character_textprefs_octal" : "Octal (0-7):",
 				"ui_character_textprefs_specialchars" : "Special characters:",
 				"ui_character_textprefs_subheading" : "<b>Character sets</b>",
 				"ui_movementbehaviour_changecharsrandomly" : "Change characters randomly",
@@ -51,7 +61,7 @@
 				"ui_movementbehaviour_rain_drop_factor" : "Rain drop length<br>(% of screen height)",
 				"ui_z_heading" : "<br>--- --- --- --- ---",
 				"ui_z_scode_chlogs" : "<a href='https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087'>Changelog</a> | <a href='https://github.com/unknownbyte/thematrixrain-wallpaper'>Source code</a>",
-				"ui_z_version" : "<i>Version 0.4.2 | 2019-03-14</i>"
+				"ui_z_version" : "<i>Version 0.5.0 | 2020-03-19</i>"
 			}
 		},
 		"properties" : 
@@ -91,15 +101,61 @@
 				"type" : "text",
 				"value" : ""
 			},
+			"character_fontfamily" : 
+			{
+				"options" : 
+				[
+					{
+						"label" : "Arial",
+						"value" : 1
+					},
+					{
+						"label" : "Comic Sans MS",
+						"value" : 2
+					},
+					{
+						"label" : "Courier New",
+						"value" : 3
+					},
+					{
+						"label" : "Georgia",
+						"value" : 4
+					},
+					{
+						"label" : "Impact",
+						"value" : 5
+					},
+					{
+						"label" : "Lucida Console",
+						"value" : 6
+					},
+					{
+						"label" : "Times New Roman",
+						"value" : 7
+					}
+				],
+				"order" : 211,
+				"text" : "ui_character_fontfamily",
+				"type" : "combo",
+				"value" : 3
+			},
 			"character_fontsize" : 
 			{
 				"editable" : true,
 				"max" : 25,
-				"min" : 5,
-				"order" : 211,
+				"min" : 8,
+				"order" : 212,
 				"text" : "ui_character_fontsize",
 				"type" : "slider",
 				"value" : 14
+			},
+			"character_fontsize_note" : 
+			{
+				"condition" : "character_fontsize.value <= 11",
+				"order" : 213,
+				"text" : "ui_character_fontsize_note",
+				"type" : "text",
+				"value" : ""
 			},
 			"character_heading" : 
 			{
@@ -108,12 +164,26 @@
 				"type" : "text",
 				"value" : ""
 			},
+			"character_textprefs_binary" : 
+			{
+				"order" : 224,
+				"text" : "ui_character_textprefs_binary",
+				"type" : "bool",
+				"value" : false
+			},
 			"character_textprefs_cyrillic" : 
 			{
-				"order" : 225,
+				"order" : 227,
 				"text" : "ui_character_textprefs_cyrillic",
 				"type" : "bool",
 				"value" : true
+			},
+			"character_textprefs_hex" : 
+			{
+				"order" : 225,
+				"text" : "ui_character_textprefs_hex",
+				"type" : "bool",
+				"value" : false
 			},
 			"character_textprefs_letterslowercase" : 
 			{
@@ -131,8 +201,8 @@
 			},
 			"character_textprefs_nosetselected" : 
 			{
-				"condition" : "!character_textprefs_letterslowercase.value && !character_textprefs_lettersuppercase.value && !character_textprefs_numbers.value && !character_textprefs_specialchars.value && !character_textprefs_cyrillic.value",
-				"order" : 226,
+				"condition" : "!character_textprefs_letterslowercase.value && !character_textprefs_lettersuppercase.value && !character_textprefs_numbers.value && !character_textprefs_binary.value && !character_textprefs_hex.value && !character_textprefs_octal.value && !character_textprefs_specialchars.value && !character_textprefs_cyrillic.value",
+				"order" : 229,
 				"text" : "ui_character_textprefs_nosetselected",
 				"type" : "text",
 				"value" : ""
@@ -144,9 +214,16 @@
 				"type" : "bool",
 				"value" : true
 			},
+			"character_textprefs_octal" : 
+			{
+				"order" : 226,
+				"text" : "ui_character_textprefs_octal",
+				"type" : "bool",
+				"value" : false
+			},
 			"character_textprefs_specialchars" : 
 			{
-				"order" : 224,
+				"order" : 228,
 				"text" : "ui_character_textprefs_specialchars",
 				"type" : "bool",
 				"value" : true

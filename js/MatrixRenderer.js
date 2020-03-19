@@ -3,7 +3,8 @@
  * 
  * Class for rendering a Matrix Rain on a canvas.
  * 
- * Copyright (c) 2019 Patrick Goldinger. All rights reserved.
+ * Copyright (c) 2019 unknownbyte
+ * Licensed under the MIT License (see LICENSE file for details)
  * 
  */
 
@@ -12,7 +13,7 @@
  * The main object for rendering the matrix.
  * @param {Object} initOptions Initial options for MatrixRenderer.
  */
-const MatrixRenderer = function (initOptions = {}) {
+const MatrixRenderer = function (initOptions = {}, isDebug = false) {
 
     // private variables
     var render = {
@@ -31,17 +32,23 @@ const MatrixRenderer = function (initOptions = {}) {
     // private functions
     function prepareTextRange() {
         const textPrefs = {
+            binary: options.textRangeBinary,
             cyrillic: options.textRangeCyrillic,
+            hex: options.textRangeHex,
             lettersLowerCase: options.textRangeLettersLowerCase,
             lettersUpperCase: options.textRangeLettersUpperCase,
             numbers: options.textRangeNumbers,
+            octal: options.textRangeOctal,
             specialCharacters: options.textRangeSpecialCharacters
         };
         const textSets = {
+            binary: "01",
             cyrillic: "аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ",
+            hex: "0123456789ABCDEF",
             lettersLowerCase: "abcdefghijklmnopqrstuvwxyz",
             lettersUpperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
             numbers: "0123456789",
+            octal: "01234567",
             specialCharacters: ",;.:-_+*~#'^°!\"§$%&/()=?{[]}\\@€"
         };
         var retRange = "";
@@ -88,7 +95,9 @@ const MatrixRenderer = function (initOptions = {}) {
     }
     // setup render environment and canvas
     function initializeRender() {
-        console.info("Initializing Renderer with following options:", options);
+        if (isDebug) {
+            console.info("Initializing Renderer with following options:", options);
+        }
         // # CANVAS #
         options.canvasElement.setAttribute("width", options.screenWidth);
         options.canvasElement.setAttribute("height", options.screenHeight);
@@ -96,7 +105,7 @@ const MatrixRenderer = function (initOptions = {}) {
         render.count.cols = Math.floor(options.screenWidth / options.sizePerCharacter);
         render.count.rows = Math.floor(options.screenHeight / options.sizePerCharacter);
         render.ctx = options.canvasElement.getContext("2d");
-        render.ctx.font = options.sizePerCharacter + "px monospace";
+        render.ctx.font = options.sizePerCharacter + "px " + options.fontFamily;
         render.ctx.textAlign = "center";
         render.ctx.textBaseline = "middle";
         prepareTextCols(true);
@@ -161,15 +170,19 @@ const MatrixRenderer = function (initOptions = {}) {
         fontColor: "#3f2",
         fontColorHighlight: "#fff",
         fontColorShowoff: "#777",
+        fontFamily: "'Courier New'",
         fps: 24,
         screenHeight: 1080,
         screenWidth: 1920,
         sizePerCharacter: 12,
         textFactor: 0.75,
+        textRangeBinary: false,
         textRangeCyrillic: true,
+        textRangeHex: false,
         textRangeLettersLowerCase: true,
         textRangeLettersUpperCase: true,
         textRangeNumbers: true,
+        textRangeOctal: false,
         textRangeSpecialCharacters: true
     }, initOptions);
     
@@ -178,7 +191,9 @@ const MatrixRenderer = function (initOptions = {}) {
      */
     this.start = function () {
         if (!render.isPaused) {
-            console.log("Starting MatrixRenderer...");
+            if (isDebug) {
+                console.log("Starting MatrixRenderer...");
+            }
             render.textRange = prepareTextRange();
             initializeRender();
         }
@@ -193,10 +208,14 @@ const MatrixRenderer = function (initOptions = {}) {
      */
     this.pause = function () {
         if (render.ctx == null) {
-            console.error("Cannot pause MatrixRenderer: Process not initialized!");
+            if (isDebug) {
+                console.error("Cannot pause MatrixRenderer: Process not initialized!");
+            }
         }
         else {
-            console.log("Pausing MatrixRenderer...");
+            if (isDebug) {
+                console.log("Pausing MatrixRenderer...");
+            }
             window.cancelAnimationFrame(render.rafID);
             render.isPaused = true;
         }
@@ -206,10 +225,14 @@ const MatrixRenderer = function (initOptions = {}) {
      */
     this.stop = function () {
         if (render.ctx == null) {
-            console.error("Cannot stop MatrixRenderer: Process not initialized!");
+            if (isDebug) {
+                console.error("Cannot stop MatrixRenderer: Process not initialized!");
+            }
         }
         else {
-            console.log("Stopping MatrixRenderer...");
+            if (isDebug) {
+                console.log("Stopping MatrixRenderer...");
+            }
             window.cancelAnimationFrame(render.rafID);
             render.ctx.clearRect(0, 0, options.canvasElement.width, options.canvasElement.height);
             render.ctx = null;
@@ -234,8 +257,9 @@ const MatrixRenderer = function (initOptions = {}) {
         options[key] = value;
         if (key.startsWith("textRange")) {
             render.textRange = prepareTextRange();
-        }
-        else if (["screenWidth", "screenHeight", "sizePerCharacter", "textFactor"].includes(key)) {
+        } else if (key == "fontFamily") {
+            render.ctx.font = options.sizePerCharacter + "px " + options.fontFamily;
+        } else if (["screenWidth", "screenHeight", "sizePerCharacter", "textFactor"].includes(key)) {
             initializeRender();
         }
     }

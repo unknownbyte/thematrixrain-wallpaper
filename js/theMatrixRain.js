@@ -41,11 +41,21 @@ window.wallpaperPropertyListener = {
         // +++++++++++++++++
         // +++ CHARACTER +++
         // +++++++++++++++++
+        if (properties.character_fontfamily) {
+            let fonts = ["Arial", "'Comic Sans MS'", "'Courier New'", "Georgia", "Impact", "'Lucida Console'", "'Times New Roman'"];
+            mr.setOption("fontFamily", fonts[properties.character_fontfamily.value - 1]);
+        }
         if (properties.character_fontsize) {
             mr.setOption("sizePerCharacter", properties.character_fontsize.value);
         }
+        if (properties.character_textprefs_binary) {
+            mr.setOption("textRangeBinary", properties.character_textprefs_binary.value);
+        }
         if (properties.character_textprefs_cyrillic) {
             mr.setOption("textRangeCyrillic", properties.character_textprefs_cyrillic.value);
+        }
+        if (properties.character_textprefs_hex) {
+            mr.setOption("textRangeHex", properties.character_textprefs_hex.value);
         }
         if (properties.character_textprefs_letterslowercase) {
             mr.setOption("textRangeLettersLowerCase", properties.character_textprefs_letterslowercase.value);
@@ -55,6 +65,9 @@ window.wallpaperPropertyListener = {
         }
         if (properties.character_textprefs_numbers) {
             mr.setOption("textRangeNumbers", properties.character_textprefs_numbers.value);
+        }
+        if (properties.character_textprefs_octal) {
+            mr.setOption("textRangeOctal", properties.character_textprefs_octal.value);
         }
         if (properties.character_textprefs_specialchars) {
             mr.setOption("textRangeSpecialCharacters", properties.character_textprefs_specialchars.value);
