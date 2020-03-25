@@ -13,257 +13,260 @@
  * The main object for rendering the matrix.
  * @param {Object} initOptions Initial options for MatrixRenderer.
  */
-const MatrixRenderer = function (initOptions = {}, isDebug = false) {
+class MatrixRenderer {
+    constructor (initOptions = {}, debug = false) {
+        this.debug = debug;
+        
+        this.options = Object.assign({
+            backgroundColor: "#000",
+            canvasElement: null,
+            changeCharactersRandomly: true,
+            columnAlphaFade: true,
+            font: new Proxy({
+                color: {
+                    default: "#3f2",
+                    highlight: "#fff",
+                    showoff: "#777",
+                },
+                family: "'Courier New'",
+                size: 12,
+            }, {
+                set: (obj, prop, value) => {
+                    obj[prop] = value; // must be before ifs or it causes problems
+                    if (prop === "family") {
+                        this.render.ctx.font = this.options.font.size + "px " + this.options.font.family;
+                    } else if (prop === "size") {
+                        this._initializeRender();
+                    }
+                    return true;
+                }
+            }),
+            fps: 24,
+            screen: new Proxy({
+                height: 1080,
+                rainDropFactor: 0.75,
+                width: 1920,
+            }, {
+                set: (obj, prop, value) => {
+                    obj[prop] = value;
+                    this._initializeRender();
+                    return true;
+                }
+            }),
+            textRange: new Proxy({
+                binary: false,
+                cyrillic: true,
+                hex: false,
+                lettersLowerCase: true,
+                lettersUpperCase: true,
+                numbers: true,
+                octal: false,
+                specialCharacters: true,
+            }, {
+                set: (obj, prop, value) => {
+                    obj[prop] = value;
+                    this._prepareTextRange();
+                    return true;
+                }
+            }),
+        }, initOptions);
 
-    // private variables
-    var render = {
-        ctx: null,
-        count: {
-            rows: 0,
-            cols: 0
-        },
-        isPaused: false,
-        rafID: 0,
-        rafStartTime: 0,
-        textcols: [],
-        textRange: "?"
-    };
-
-    // private functions
-    function prepareTextRange() {
-        const textPrefs = {
-            binary: options.textRangeBinary,
-            cyrillic: options.textRangeCyrillic,
-            hex: options.textRangeHex,
-            lettersLowerCase: options.textRangeLettersLowerCase,
-            lettersUpperCase: options.textRangeLettersUpperCase,
-            numbers: options.textRangeNumbers,
-            octal: options.textRangeOctal,
-            specialCharacters: options.textRangeSpecialCharacters
+        this.render = {
+            ctx: null,
+            count: {
+                rows: 0,
+                cols: 0
+            },
+            isPaused: false,
+            rafID: 0,
+            rafStartTime: 0,
+            textcols: [],
+            textRange: "?",
         };
+    }
+    
+    _prepareTextRange() {
         const textSets = {
-            binary: "01",
-            cyrillic: "аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ",
-            hex: "0123456789ABCDEF",
-            lettersLowerCase: "abcdefghijklmnopqrstuvwxyz",
-            lettersUpperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-            numbers: "0123456789",
-            octal: "01234567",
-            specialCharacters: ",;.:-_+*~#'^°!\"§$%&/()=?{[]}\\@€"
+            binary:             "01",
+            cyrillic:           "аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ",
+            hex:                "0123456789ABCDEF",
+            lettersLowerCase:   "abcdefghijklmnopqrstuvwxyz",
+            lettersUpperCase:   "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            numbers:            "0123456789",
+            octal:              "01234567",
+            specialCharacters:  ",;.:-_+*~#'^°!\"§$%&/()=?{[]}\\@€"
         };
-        var retRange = "";
-        for (var k in textPrefs) {
-            if (textPrefs.hasOwnProperty(k)) {
-                if (textPrefs[k] == true)
-                    retRange += textSets[k];
+        let tmpRange = "";
+        for (let k in this.options.textRange) {
+            if (this.options.textRange.hasOwnProperty(k)) {
+                if (this.options.textRange[k] == true) {
+                    tmpRange += textSets[k];
+                }
             }
         }
-        return retRange == "" ? "?" : retRange;
+        this.render.textRange = tmpRange == "" ? "?" : tmpRange;
     }
-    function randomTextFromRange(count, textRange) {
-        var retText = "";
-        for (var i = 0; i < count; i++)
+    _randomTextFromRange(count, textRange) {
+        let retText = "";
+        for (let i = 0; i < count; i++)
             retText += textRange.charAt(Math.floor(Math.random() * textRange.length));
       
         return retText;
     }
-    function randomTextCol(isInit = false) {
+    _randomTextCol(isInit = false) {
         return {
-            data: randomTextFromRange(render.count.rows, render.textRange),
+            data: this._randomTextFromRange(this.render.count.rows, this.render.textRange),
             delayedLoops: Math.floor(Math.random() * 140) % (isInit ? 135 : 40),
-            loops: 0,
-            dropLength: Math.floor(render.count.rows * options.textFactor)
+            dropLength: Math.floor(this.render.count.rows * this.options.screen.rainDropFactor),
+            loops: 0
         };
     }
-    function prepareTextCols(isInit = false) {
-        var c;
-        for (c = 0; c < render.count.cols; c++) {
-            render.textcols[c] = randomTextCol(isInit);
+    _prepareTextCols(isInit = false) {
+        for (let c = 0; c < this.render.count.cols; c++) {
+            this.render.textcols[c] = this._randomTextCol(isInit);
         }
     }
-    function changeTextFromTextCols() {
-        var c, cc, ccMax = Math.floor(Math.random() * 100) % Math.floor(render.count.rows / 8), rpos;
-        for (c = 0; c < render.count.cols; c++) {
-            var txtcTmp = render.textcols[c].data.split("");
-            var txtRangeTmp = randomTextFromRange(render.count.rows, render.textRange);
+    _changeTextFromTextCols() {
+        let c, cc, ccMax = Math.floor(Math.random() * 100) % Math.floor(this.render.count.rows / 8), rpos;
+        for (c = 0; c < this.render.count.cols; c++) {
+            let txtcTmp = this.render.textcols[c].data.split("");
+            let txtRangeTmp = this._randomTextFromRange(this.render.count.rows, this.render.textRange);
             for (cc = 0; cc < ccMax; cc++) {
-                rpos = Math.floor(Math.random() * 100) % (render.count.rows);
+                rpos = Math.floor(Math.random() * 100) % (this.render.count.rows);
                 txtcTmp[rpos] = txtRangeTmp[rpos];
             }
-            render.textcols[c].data = txtcTmp.join("");
+            this.render.textcols[c].data = txtcTmp.join("");
         }
     }
+    _timeNow() {
+        return performance.timing.navigationStart + performance.now();
+    }
+
     // setup render environment and canvas
-    function initializeRender() {
-        if (isDebug) {
-            console.info("Initializing Renderer with following options:", options);
+    _initializeRender() {
+        if (this.debug) {
+            console.info("Initializing Renderer with following options:", this.options);
         }
         // # CANVAS #
-        options.canvasElement.setAttribute("width", options.screenWidth);
-        options.canvasElement.setAttribute("height", options.screenHeight);
+        this.options.canvasElement.setAttribute("width", this.options.screen.width);
+        this.options.canvasElement.setAttribute("height", this.options.screen.height);
         // # RENDER #
-        render.count.cols = Math.floor(options.screenWidth / options.sizePerCharacter);
-        render.count.rows = Math.floor(options.screenHeight / options.sizePerCharacter);
-        render.ctx = options.canvasElement.getContext("2d");
-        render.ctx.font = options.sizePerCharacter + "px " + options.fontFamily;
-        render.ctx.textAlign = "center";
-        render.ctx.textBaseline = "middle";
-        prepareTextCols(true);
+        this.render.count.cols = Math.floor(this.options.screen.width / this.options.font.size);
+        this.render.count.rows = Math.floor(this.options.screen.height / this.options.font.size);
+        this.render.ctx = this.options.canvasElement.getContext("2d");
+        this.render.ctx.font = this.options.font.size + "px " + this.options.font.family;
+        this.render.ctx.textAlign = "center";
+        this.render.ctx.textBaseline = "middle";
+        this._prepareTextRange();
+        this._prepareTextCols(true);
     }
     // draw matrix
-    function drawMatrix() {
+    _drawMatrix() {
         // register next call
-        render.rafID = window.requestAnimationFrame(drawMatrix);
-        var ellapsed = Date.now() - render.rafStartTime;
-        if (ellapsed > (1000 / options.fps)) {
-            render.rafStartTime = Date.now() - (ellapsed % (1000 / options.fps));
+        this.render.rafID = window.requestAnimationFrame(() => this._drawMatrix());
+        let ellapsed = this._timeNow() - this.render.rafStartTime;
+        if (ellapsed > (1000 / this.options.fps)) {
+            this.render.rafStartTime = Date.now() - (ellapsed % (1000 / this.options.fps));
             // # CLEANUP #
-            render.ctx.clearRect(0, 0, options.canvasElement.width, options.canvasElement.height);
-            options.canvasElement.style.backgroundColor = options.backgroundColor;
-            render.ctx.globalAlpha = 1.0;
-            var r, c, txtc;
-            for (c = 0; c < render.count.cols; c++) {
-                txtc = render.textcols[c];
+            this.render.ctx.clearRect(0, 0, this.options.canvasElement.width, this.options.canvasElement.height);
+            this.options.canvasElement.style.backgroundColor = this.options.backgroundColor;
+            this.render.ctx.globalAlpha = 1.0;
+            let r, c, txtc, size = this.options.font.size;
+            for (c = 0; c < this.render.count.cols; c++) {
+                txtc = this.render.textcols[c];
                 if (txtc.delayedLoops > 0)
                     txtc.delayedLoops--;
-                else if (txtc.loops > txtc.dropLength + render.count.rows + 4) {
-                    render.textcols[c] = randomTextCol(false);
+                else if (txtc.loops > txtc.dropLength + this.render.count.rows + 4) {
+                    this.render.textcols[c] = this._randomTextCol(false);
                 }
                 else {
-                    //render.ctx.globalAlpha = txtc.alpha;
-                    for (r = 0; r < render.count.rows; r++) {
-                        render.ctx.fillStyle = options.fontColor;
-                        // highlight character
-                        if (txtc.loops % render.count.rows == r && txtc.loops < render.count.rows)
-                            render.ctx.fillStyle = options.fontColorHighlight;
-                        // if dropLength + 4 + row < loops happened
-                        else if (txtc.loops > txtc.dropLength + 4 + r)
+                    for (r = 0; r < this.render.count.rows; r++) {
+                        let color = this.options.font.color.default;
+                        if (txtc.loops % this.render.count.rows == r && txtc.loops < this.render.count.rows) {
+                            // highlight character
+                            color = this.options.font.color.highlight;
+                        } else if (txtc.loops > txtc.dropLength + 4 + r) {
+                            // if dropLength + 4 + row < loops happened
                             continue;
-                        else if (txtc.loops > txtc.dropLength + r && txtc.loops <= txtc.dropLength + 4 + r)
-                            render.ctx.fillStyle = options.fontColorShowoff;
-                        if (options.columnAlphaFade)
-                            render.ctx.globalAlpha = 1 - (txtc.loops - r) / (txtc.dropLength + 4);
-                        render.ctx.fillText(
+                        } else if (txtc.loops > txtc.dropLength + r && txtc.loops <= txtc.dropLength + 4 + r) {
+                            color = this.options.font.color.showoff;
+                        }
+                        if (this.options.columnAlphaFade) {
+                            this.render.ctx.globalAlpha = 1 - (txtc.loops - r) / (txtc.dropLength + 4);
+                        }
+                        this.render.ctx.fillStyle = color;
+                        this.render.ctx.fillText(
                             txtc.data.charAt(r),
-                            c * options.sizePerCharacter + options.sizePerCharacter / 2, 
-                            r * options.sizePerCharacter + options.sizePerCharacter / 2
+                            c * size + size / 2,
+                            r * size + size / 2,
                         );
                         // if highlight character -> break
-                        if (txtc.loops % render.count.rows == r && txtc.loops < render.count.rows)
+                        if (txtc.loops % this.render.count.rows == r && txtc.loops < this.render.count.rows) {
                             break;
+                        }
                     }
                     txtc.loops++;
                 }
             }
-            if (options.changeCharactersRandomly) {
-                changeTextFromTextCols();
+            if (this.options.changeCharactersRandomly) {
+                this._changeTextFromTextCols();
             }
         }
     }
-
-    // initialize options
-    var options = Object.assign({
-        backgroundColor: "#000",
-        canvasElement: null,
-        changeCharactersRandomly: true,
-        columnAlphaFade: true,
-        fontColor: "#3f2",
-        fontColorHighlight: "#fff",
-        fontColorShowoff: "#777",
-        fontFamily: "'Courier New'",
-        fps: 24,
-        screenHeight: 1080,
-        screenWidth: 1920,
-        sizePerCharacter: 12,
-        textFactor: 0.75,
-        textRangeBinary: false,
-        textRangeCyrillic: true,
-        textRangeHex: false,
-        textRangeLettersLowerCase: true,
-        textRangeLettersUpperCase: true,
-        textRangeNumbers: true,
-        textRangeOctal: false,
-        textRangeSpecialCharacters: true
-    }, initOptions);
     
     /**
      * Starts the MatrixRenderer.
      */
-    this.start = function () {
-        if (!render.isPaused) {
-            if (isDebug) {
+    start() {
+        if (!this.render.isPaused) {
+            if (this.debug) {
                 console.log("Starting MatrixRenderer...");
             }
-            render.textRange = prepareTextRange();
-            initializeRender();
+            this._prepareTextRange();
+            this._initializeRender();
         }
         else {
-            render.isPaused = false;
+            this.render.isPaused = false;
         }
-        render.rafStartTime = Date.now();
-        drawMatrix();
+        this.render.rafStartTime = this._timeNow();
+        this._drawMatrix();
     }
     /**
      * Pauses the MatrixRenderer, if possible.
      */
-    this.pause = function () {
-        if (render.ctx == null) {
-            if (isDebug) {
+    pause() {
+        if (this.render.ctx == null) {
+            if (this.debug) {
                 console.error("Cannot pause MatrixRenderer: Process not initialized!");
             }
         }
         else {
-            if (isDebug) {
+            if (this.debug) {
                 console.log("Pausing MatrixRenderer...");
             }
-            window.cancelAnimationFrame(render.rafID);
-            render.isPaused = true;
+            window.cancelAnimationFrame(this.render.rafID);
+            this.render.isPaused = true;
         }
     }
     /**
      * Stops the MatrixRenderer, if possible.
      */
-    this.stop = function () {
-        if (render.ctx == null) {
-            if (isDebug) {
+    stop() {
+        if (this.render.ctx == null) {
+            if (this.debug) {
                 console.error("Cannot stop MatrixRenderer: Process not initialized!");
             }
         }
         else {
-            if (isDebug) {
+            if (this.debug) {
                 console.log("Stopping MatrixRenderer...");
             }
-            window.cancelAnimationFrame(render.rafID);
-            render.ctx.clearRect(0, 0, options.canvasElement.width, options.canvasElement.height);
-            render.ctx = null;
-            render.isPaused = false;
+            window.cancelAnimationFrame(this.render.rafID);
+            this.render.ctx.clearRect(0, 0, this.options.canvasElement.width, this.options.canvasElement.height);
+            this.render.ctx = null;
+            this.render.isPaused = false;
         }
     }
-
-    /**
-     * Returns the value for the given key.
-     * @param {string} key - The key.
-     */
-    this.getOption = function (key) {
-        return options[key];
-    }
-    /**
-     * Sets the value for the given key.
-     * On some properties a reload is needed, this is done automatically.
-     * @param {string} key - The key.
-     * @param value - The value.
-     */
-    this.setOption = function (key, value) {
-        options[key] = value;
-        if (key.startsWith("textRange")) {
-            render.textRange = prepareTextRange();
-        } else if (key == "fontFamily") {
-            render.ctx.font = options.sizePerCharacter + "px " + options.fontFamily;
-        } else if (["screenWidth", "screenHeight", "sizePerCharacter", "textFactor"].includes(key)) {
-            initializeRender();
-        }
-    }
-
 }
 
 // End of MatrixRenderer.js

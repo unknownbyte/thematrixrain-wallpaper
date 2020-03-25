@@ -6,12 +6,12 @@ var mr = new MatrixRenderer({
 mr.start();
 
 window.addEventListener("resize", function () {
-    mr.setOption("screenWidth", window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth);
-    mr.setOption("screenHeight", window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+    mr.options.screen.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    mr.options.screen.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeights;
 });
 
 function getRGB(nonrgb) {
-    var ret = nonrgb.split(' ');
+    let ret = nonrgb.split(' ');
     ret = ret.map(function(c) {
         return Math.ceil(c * 255);
     });
@@ -25,16 +25,16 @@ window.wallpaperPropertyListener = {
         // +++ APPEARANCE +++
         // ++++++++++++++++++
         if (properties.appearance_backgroundcolor) {
-            mr.setOption("backgroundColor", getRGB(properties.appearance_backgroundcolor.value));
+            mr.options.backgroundColor = getRGB(properties.appearance_backgroundcolor.value);
         }
         if (properties.appearance_fontcolor) {
-            mr.setOption("fontColor", getRGB(properties.appearance_fontcolor.value));
+            mr.options.font.color.default = getRGB(properties.appearance_fontcolor.value);
         }
         if (properties.appearance_fontcolorhighlight) {
-            mr.setOption("fontColorHighlight", getRGB(properties.appearance_fontcolorhighlight.value));
+            mr.options.font.color.highlight = getRGB(properties.appearance_fontcolorhighlight.value);
         }
         if (properties.appearance_fontcolorshowoff) {
-            mr.setOption("fontColorShowoff", getRGB(properties.appearance_fontcolorshowoff.value));
+            mr.options.font.color.showoff = getRGB(properties.appearance_fontcolorshowoff.value);
         }
 
 
@@ -43,34 +43,34 @@ window.wallpaperPropertyListener = {
         // +++++++++++++++++
         if (properties.character_fontfamily) {
             let fonts = ["Arial", "'Comic Sans MS'", "'Courier New'", "Georgia", "Impact", "'Lucida Console'", "'Times New Roman'"];
-            mr.setOption("fontFamily", fonts[properties.character_fontfamily.value - 1]);
+            mr.options.font.family = fonts[properties.character_fontfamily.value - 1];
         }
         if (properties.character_fontsize) {
-            mr.setOption("sizePerCharacter", properties.character_fontsize.value);
+            mr.options.font.size = properties.character_fontsize.value;
         }
         if (properties.character_textprefs_binary) {
-            mr.setOption("textRangeBinary", properties.character_textprefs_binary.value);
+            mr.options.textRange.binary = properties.character_textprefs_binary.value;
         }
         if (properties.character_textprefs_cyrillic) {
-            mr.setOption("textRangeCyrillic", properties.character_textprefs_cyrillic.value);
+            mr.options.textRange.cyrillic = properties.character_textprefs_cyrillic.value;
         }
         if (properties.character_textprefs_hex) {
-            mr.setOption("textRangeHex", properties.character_textprefs_hex.value);
+            mr.options.textRange.hex = properties.character_textprefs_hex.value;
         }
         if (properties.character_textprefs_letterslowercase) {
-            mr.setOption("textRangeLettersLowerCase", properties.character_textprefs_letterslowercase.value);
+            mr.options.textRange.lettersLowerCase = properties.character_textprefs_letterslowercase.value;
         }
         if (properties.character_textprefs_lettersuppercase) {
-            mr.setOption("textRangeLettersUpperCase", properties.character_textprefs_lettersuppercase.value);
+            mr.options.textRange.lettersUpperCase = properties.character_textprefs_lettersuppercase.value;
         }
         if (properties.character_textprefs_numbers) {
-            mr.setOption("textRangeNumbers", properties.character_textprefs_numbers.value);
+            mr.options.textRange.numbers = properties.character_textprefs_numbers.value;
         }
         if (properties.character_textprefs_octal) {
-            mr.setOption("textRangeOctal", properties.character_textprefs_octal.value);
+            mr.options.textRange.octal = properties.character_textprefs_octal.value;
         }
         if (properties.character_textprefs_specialchars) {
-            mr.setOption("textRangeSpecialCharacters", properties.character_textprefs_specialchars.value);
+            mr.options.textRange.specialCharacters = properties.character_textprefs_specialchars.value;
         }
 
 
@@ -78,16 +78,16 @@ window.wallpaperPropertyListener = {
         // +++ MOVEMENT BEHAVIOUR +++
         // ++++++++++++++++++++++++++
         if (properties.movementbehaviour_changecharsrandomly) {
-            mr.setOption("changeCharactersRandomly", properties.movementbehaviour_changecharsrandomly.value);
+            mr.options.changeCharactersRandomly = properties.movementbehaviour_changecharsrandomly.value;
         }
         if (properties.movementbehaviour_columnalphafade) {
-            mr.setOption("columnAlphaFade", properties.movementbehaviour_columnalphafade.value);
+            mr.options.columnAlphaFade = properties.movementbehaviour_columnalphafade.value;
         }
         if (properties.movementbehaviour_fps) {
-            mr.setOption("fps", properties.movementbehaviour_fps.value);
+            mr.options.fps = properties.movementbehaviour_fps.value;
         }
         if (properties.movementbehaviour_rain_drop_factor) {
-            mr.setOption("textFactor", properties.movementbehaviour_rain_drop_factor.value / 100);
+            mr.options.rainDropFactor = properties.movementbehaviour_rain_drop_factor.value / 100;
         }
     }
 };
