@@ -18,11 +18,61 @@
         background: none;
         border: none;
     }
+
+    #debug {
+        background-color: rgba(255, 255, 0, 0.9);
+        border-radius: 4px;
+        box-shadow: 0 0 4px 2px rgb(0, 0, 0);
+        color: rgb(0, 0, 0);
+        display: none;
+        font-family: sans-serif;
+        padding: 10px;
+        position: absolute;
+    }
+    #debug[data-visible="true"] {
+        display: block;
+    }
+    #debug[data-wpos="TL"] { top: 0; left: 0; }
+    #debug[data-wpos="TR"] { top: 0; right: 0; }
+    #debug[data-wpos="BL"] { bottom: 0; left: 0; }
+    #debug[data-wpos="BR"] { bottom: 0; right: 0; }
+    #debug h4 {
+        margin: 0 0 16px 0;
+    }
     </style>
 </head>
 
 <body>
     <canvas id="matrix">This browser does not support canvas!</canvas>
+    <div id="debug" data-wpos="TL" data-visible="false">
+        <h4>Debug TheMatrixRain</h4>
+        <div>
+            <span>FPS: </span>
+            <span id="debug__fps">??</span>
+            <span>avg.: </span>
+            <span id="debug__fps-avg">??</span>
+            <button onclick="mr.start()">Start</button>
+            <button onclick="mr.pause()">Pause</button>
+            <button onclick="mr.stop()">Stop</button><br>
+            <span>Set max FPS to:</span>
+            <button onclick="mr.options.fps=1">1</button>
+            <button onclick="mr.options.fps=10">10</button>
+            <button onclick="mr.options.fps=24">24</button>
+            <button onclick="mr.options.fps=30">30</button>
+            <button onclick="mr.options.fps=60">60</button><br>
+            <span>Set font size to:</span>
+            <button onclick="mr.options.font.size=8">8</button>
+            <button onclick="mr.options.font.size=10">10</button>
+            <button onclick="mr.options.font.size=12">12</button>
+            <button onclick="mr.options.font.size=14">14</button><br><br>
+            <span>Debug Window position:</span>
+            <button onclick="document.getElementById('debug').dataset.wpos='TL'" title="Top Left">TL</button>
+            <button onclick="document.getElementById('debug').dataset.wpos='TR'" title="Top Right">TR</button>
+            <button onclick="document.getElementById('debug').dataset.wpos='BL'" title="Bottom Left">BL</button>
+            <button onclick="document.getElementById('debug').dataset.wpos='BR'" title="Bottom Right">BR</button><br>
+            <button onclick="mr.debug.enabled=false">Disable debug and close window</button>
+        </div>
+    </div>
     <script src="js/MatrixRenderer.js"></script>
     <script src="js/theMatrixRain.js"></script>
 </body>

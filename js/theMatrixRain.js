@@ -1,8 +1,8 @@
 var mr = new MatrixRenderer({
-    canvasElement: document.getElementById("matrix"),
-    screenWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-    screenHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    canvasElement: document.getElementById("matrix")
 });
+mr.options.screen.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+mr.options.screen.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 mr.start();
 
 window.addEventListener("resize", function () {

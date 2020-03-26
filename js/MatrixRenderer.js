@@ -14,8 +14,42 @@
  * @param {Object} initOptions Initial options for MatrixRenderer.
  */
 class MatrixRenderer {
-    constructor (initOptions = {}, debug = false) {
-        this.debug = debug;
+    constructor (initOptions = {}, isDebugEnabled = false) {
+        this.debug = new Proxy({
+            enabled: false,
+            fps: {
+                add: (entry) => {
+                    if (this.debug.fps._n >= 60) {
+                        this.debug.fps._n = 0;
+                    }
+                    this.debug.fps._dataset[this.debug.fps._n++] = entry;
+                    let sum = this.debug.fps._dataset.reduce((acc, cur) => acc + cur);
+                    this.debug.fps.average = Math.round(sum / this.debug.fps._dataset.length);
+                    return entry;
+                },
+                average: 0,
+                _dataset: [],
+                _n: 0
+            },
+            gui: Object.freeze({
+                fpsCounter: document.getElementById("debug__fps"),
+                fpsCounterAvg: document.getElementById("debug__fps-avg"),
+                windowFrame: document.getElementById("debug"),
+            })
+        }, {
+            set: (obj, prop, value) => {
+                if (prop === "enabled") {
+                    if (typeof value !== "boolean") {
+                        throw new TypeError("Only boolean allowed!");
+                    } else {
+                        this.debug.gui.windowFrame.dataset.visible = value;
+                    }
+                }
+                obj[prop] = value;
+                return true;
+            }
+        });
+        this.debug.enabled = isDebugEnabled;
         
         this.options = Object.assign({
             backgroundColor: "#000",
@@ -144,7 +178,7 @@ class MatrixRenderer {
 
     // setup render environment and canvas
     _initializeRender() {
-        if (this.debug) {
+        if (this.debug.enabled) {
             console.info("Initializing Renderer with following options:", this.options);
         }
         // # CANVAS #
@@ -166,6 +200,10 @@ class MatrixRenderer {
         this.render.rafID = window.requestAnimationFrame(() => this._drawMatrix());
         let ellapsed = this._timeNow() - this.render.rafStartTime;
         if (ellapsed > (1000 / this.options.fps)) {
+            if (this.debug.enabled) {
+                this.debug.gui.fpsCounter.innerHTML = this.debug.fps.add(Math.round(1/(ellapsed/1000)));
+                this.debug.gui.fpsCounterAvg.innerHTML = this.debug.fps.average;
+            }
             this.render.rafStartTime = Date.now() - (ellapsed % (1000 / this.options.fps));
             // # CLEANUP #
             this.render.ctx.clearRect(0, 0, this.options.canvasElement.width, this.options.canvasElement.height);
@@ -219,7 +257,7 @@ class MatrixRenderer {
      */
     start() {
         if (!this.render.isPaused) {
-            if (this.debug) {
+            if (this.debug.enabled) {
                 console.log("Starting MatrixRenderer...");
             }
             this._prepareTextRange();
@@ -236,12 +274,12 @@ class MatrixRenderer {
      */
     pause() {
         if (this.render.ctx == null) {
-            if (this.debug) {
+            if (this.debug.enabled) {
                 console.error("Cannot pause MatrixRenderer: Process not initialized!");
             }
         }
         else {
-            if (this.debug) {
+            if (this.debug.enabled) {
                 console.log("Pausing MatrixRenderer...");
             }
             window.cancelAnimationFrame(this.render.rafID);
@@ -253,12 +291,12 @@ class MatrixRenderer {
      */
     stop() {
         if (this.render.ctx == null) {
-            if (this.debug) {
+            if (this.debug.enabled) {
                 console.error("Cannot stop MatrixRenderer: Process not initialized!");
             }
         }
         else {
-            if (this.debug) {
+            if (this.debug.enabled) {
                 console.log("Stopping MatrixRenderer...");
             }
             window.cancelAnimationFrame(this.render.rafID);
