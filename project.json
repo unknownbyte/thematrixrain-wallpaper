@@ -1,6 +1,6 @@
 {
 	"contentrating" : "Everyone",
-	"description" : "An infinite, widely customizable matrix code rain for your desktop.\n\n[h1]Features[/h1]\n[list]\n    [*]Customize the style of both back- and foreground\n    [*]Choose from different character sets like Latin, Numbers, Special Characters, Cyrillic, ...\n    [*]Set the speed and size of the rain\n    [*]Set font family of the rain\n    [*]Fade out rain drops\n[/list]\n\nIf you experience any problems with this wallpaper or you have a feature request, feel free to comment!\n\n--- --- --- --- ---\n[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087]Changelog[/url] | [url=https://github.com/unknownbyte/thematrixrain-wallpaper]Source code[/url]",
+	"description" : "An infinite, widely customizable matrix code rain for your desktop.\r\n\r\n[h1]Features[/h1]\r\n[list]\r\n    [*]Customize the style of both back- and foreground\r\n    [*]Choose from different character sets: Latin, Numbers, Binary, Hexadecimal, Octal, Special Characters, Cyrillic\r\n    [*]Set the speed and size of the rain\r\n    [*]Set the font family of the rain\r\n    [*]Fade out rain drops\r\n[/list]\r\n\r\nIf you experience any problems with this wallpaper or you have a feature request, feel free to comment!\r\n\r\n--- --- --- --- ---\r\n[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087]Changelog[/url] | [url=https://github.com/unknownbyte/thematrixrain-wallpaper]Source code[/url]",
 	"file" : "index.html",
 	"general" : 
 	{
@@ -61,7 +61,7 @@
 				"ui_movementbehaviour_rain_drop_factor" : "Rain drop length<br>(% of screen height)",
 				"ui_z_heading" : "<br>--- --- --- --- ---",
 				"ui_z_scode_chlogs" : "<a href='https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087'>Changelog</a> | <a href='https://github.com/unknownbyte/thematrixrain-wallpaper'>Source code</a>",
-				"ui_z_version" : "<i>Version 0.5.0 | 2020-03-19</i>"
+				"ui_z_version" : "<i>Version 0.6.0 | 2020-03-27</i>"
 			}
 		},
 		"properties" : 
@@ -143,15 +143,15 @@
 			{
 				"editable" : true,
 				"max" : 25,
-				"min" : 8,
+				"min" : 6,
 				"order" : 212,
 				"text" : "ui_character_fontsize",
 				"type" : "slider",
-				"value" : 14
+				"value" : 12
 			},
 			"character_fontsize_note" : 
 			{
-				"condition" : "character_fontsize.value <= 11",
+				"condition" : "character_fontsize.value <= 9",
 				"order" : 213,
 				"text" : "ui_character_fontsize_note",
 				"type" : "text",
@@ -257,7 +257,7 @@
 				"order" : 313,
 				"text" : "ui_movementbehaviour_fps",
 				"type" : "slider",
-				"value" : 24
+				"value" : 30
 			},
 			"movementbehaviour_heading" : 
 			{

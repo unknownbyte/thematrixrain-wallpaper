@@ -10,12 +10,12 @@ window.addEventListener("resize", function () {
     mr.options.screen.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeights;
 });
 
-function getRGB(nonrgb) {
+function getHex(nonrgb) {
     let ret = nonrgb.split(' ');
     ret = ret.map(function(c) {
-        return Math.ceil(c * 255);
+        return parseFloat(c);
     });
-    return "rgb(" + ret.join(',') + ")";
+    return PIXI.utils.rgb2hex(ret);
 }
 
 window.wallpaperPropertyListener = {
@@ -25,16 +25,16 @@ window.wallpaperPropertyListener = {
         // +++ APPEARANCE +++
         // ++++++++++++++++++
         if (properties.appearance_backgroundcolor) {
-            mr.options.backgroundColor = getRGB(properties.appearance_backgroundcolor.value);
+            mr.options.backgroundColor = getHex(properties.appearance_backgroundcolor.value);
         }
         if (properties.appearance_fontcolor) {
-            mr.options.font.color.default = getRGB(properties.appearance_fontcolor.value);
+            mr.options.font.color.default = getHex(properties.appearance_fontcolor.value);
         }
         if (properties.appearance_fontcolorhighlight) {
-            mr.options.font.color.highlight = getRGB(properties.appearance_fontcolorhighlight.value);
+            mr.options.font.color.highlight = getHex(properties.appearance_fontcolorhighlight.value);
         }
         if (properties.appearance_fontcolorshowoff) {
-            mr.options.font.color.showoff = getRGB(properties.appearance_fontcolorshowoff.value);
+            mr.options.font.color.showoff = getHex(properties.appearance_fontcolorshowoff.value);
         }
 
 
@@ -87,7 +87,7 @@ window.wallpaperPropertyListener = {
             mr.options.fps = properties.movementbehaviour_fps.value;
         }
         if (properties.movementbehaviour_rain_drop_factor) {
-            mr.options.rainDropFactor = properties.movementbehaviour_rain_drop_factor.value / 100;
+            mr.options.screen.rainDropFactor = properties.movementbehaviour_rain_drop_factor.value / 100;
         }
     }
 };

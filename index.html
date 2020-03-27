@@ -8,6 +8,7 @@
     html,body{height:100%;}
 
     body {
+        background-color: rgb(0, 0, 0);
         height: 100%;
         margin: 0;
         overflow: hidden;
@@ -23,11 +24,15 @@
         background-color: rgba(255, 255, 0, 0.9);
         border-radius: 4px;
         box-shadow: 0 0 4px 2px rgb(0, 0, 0);
+        box-sizing: border-box;
         color: rgb(0, 0, 0);
         display: none;
         font-family: sans-serif;
+        max-height: 100%;
+        overflow: auto;
         padding: 10px;
         position: absolute;
+        max-width: 400px;
     }
     #debug[data-visible="true"] {
         display: block;
@@ -36,8 +41,31 @@
     #debug[data-wpos="TR"] { top: 0; right: 0; }
     #debug[data-wpos="BL"] { bottom: 0; left: 0; }
     #debug[data-wpos="BR"] { bottom: 0; right: 0; }
-    #debug h4 {
+    #debug h4, #debug h5 {
         margin: 0 0 16px 0;
+    }
+    #debug__custom-console[data-visible="false"] {
+        display: none;
+    }
+    #debug__custom-console .entry {
+        margin: 0 0 8px 0;
+        padding: 4px 8px;
+    }
+    #debug__custom-console .log {
+        background-color: rgb(255, 255, 255);
+        color:rgb(0, 0, 0);
+    }
+    #debug__custom-console .info {
+        background-color: rgb(0, 132, 255);
+        color:rgb(255, 255, 255);
+    }
+    #debug__custom-console .warn {
+        background-color: rgb(255, 145, 0);
+        color:rgb(0, 0, 0);
+    }
+    #debug__custom-console .error {
+        background-color: rgb(255, 0, 0);
+        color:rgb(255, 255, 255);
     }
     </style>
 </head>
@@ -52,7 +80,8 @@
             <span>avg.: </span>
             <span id="debug__fps-avg">??</span>
             <button onclick="mr.start()">Start</button>
-            <button onclick="mr.pause()">Pause</button>
+            <button onclick="mr.restart()">Restart</button>
+            <button onclick="mr.togglePause()">Pause</button>
             <button onclick="mr.stop()">Stop</button><br>
             <span>Set max FPS to:</span>
             <button onclick="mr.options.fps=1">1</button>
@@ -70,9 +99,16 @@
             <button onclick="document.getElementById('debug').dataset.wpos='TR'" title="Top Right">TR</button>
             <button onclick="document.getElementById('debug').dataset.wpos='BL'" title="Bottom Left">BL</button>
             <button onclick="document.getElementById('debug').dataset.wpos='BR'" title="Bottom Right">BR</button><br>
-            <button onclick="mr.debug.enabled=false">Disable debug and close window</button>
+            <button onclick="mr.debug.enabled=false">Disable debug and close window</button><br>
+            <button onclick="mr.debug.switchToCustomConsole()">Custom Console</button>
+            <button onclick="mr.debug.switchToDefaultConsole()">Default Console</button>
+        </div>
+        <div id="debug__custom-console" data-visible="false">
+            <hr>
+            <h5>Custom Console</h5>
         </div>
     </div>
+    <script src="js/pixi/pixi.min.js"></script>
     <script src="js/MatrixRenderer.js"></script>
     <script src="js/theMatrixRain.js"></script>
 </body>
