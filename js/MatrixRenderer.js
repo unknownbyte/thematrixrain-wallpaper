@@ -3,7 +3,7 @@
  * 
  * Class for rendering a Matrix Rain on a canvas.
  * 
- * Copyright (c) 2019 unknownbyte
+ * Copyright (c) 2020 UnknownByte
  * Licensed under the MIT License (see LICENSE file for details)
  * 
  */
@@ -14,7 +14,7 @@
  * @param {Object} initOptions Initial options for MatrixRenderer.
  */
 class MatrixRenderer {
-    constructor (initOptions = {}, isDebugEnabled = false) {
+    constructor (initOptions = {}, isDebugEnabled = true) {
         this.debug = new Proxy({
             _consoleLog: null,
             _consoleInfo: null,
@@ -107,11 +107,6 @@ class MatrixRenderer {
             changeCharactersRandomly: true,
             columnAlphaFade: true,
             font: new Proxy({
-                color: new Proxy({
-                    default: 0x33FF22,
-                    highlight: 0xFFFFFF,
-                    showoff: 0x777777,
-                }, optionHandler("font.color.")),
                 family: "'Courier New'",
                 size: 12,
             }, optionHandler("font.")),
@@ -121,6 +116,27 @@ class MatrixRenderer {
                 rainDropFactor: 0.75,
                 width: 1920,
             }, optionHandler("screen.")),
+            style: {
+                column: {
+                    color: 0x33FF22,
+                    color1: 0xFFFFFF,
+                    color2: 0xFFFFFF,
+                    // possible modes:
+                    // 1    - Single color
+                    // 2    - Gradient (vertical)
+                    // 3    - Gradient (horizontal)
+                    // 4    - Random
+                    mode: 1,
+                },
+                highlight: {
+                    color: 0xFFFFFF,
+                    enabled: true,
+                },
+                showoff: {
+                    color: 0x777777,
+                    enabled: true,
+                },
+            },
             textRange: new Proxy({
                 binary: false,
                 cyrillic: true,
@@ -244,34 +260,27 @@ class MatrixRenderer {
         let ctx = canvas.getContext("2d");
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
+        ctx.fillStyle = PIXI.utils.hex2string(0xFFFFFF);
         ctx.font = this.options.font.size + "px " + this.options.font.family;
+        // Create fallback
+        this.render.pixi.app.loader.add("l_blank", canvas.toDataURL());
         // Create textRange + fallback letter (?) if not included in textRange
         for (let l = 0; l < this.render.textRangeAll.length; l++) {
-            [
-                this.options.font.color.highlight,
-                this.options.font.color.default,
-                this.options.font.color.showoff,
-            ].forEach((v, i) => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = PIXI.utils.hex2string(v);
-                ctx.fillText(
-                    this.render.textRangeAll.charAt(l),
-                    this.options.font.size / 2,
-                    this.options.font.size / 2,
-                );
-                this.render.pixi.app.loader.add("l_" + i + "_" + this.render.textRangeAll.charCodeAt(l), canvas.toDataURL());
-            });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillText(
+                this.render.textRangeAll.charAt(l),
+                this.options.font.size / 2,
+                this.options.font.size / 2,
+            );
+            this.render.pixi.app.loader.add("l_" + this.render.textRangeAll.charCodeAt(l), canvas.toDataURL());
         }
-        // Create fallback
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.render.pixi.app.loader.add("l_blank", canvas.toDataURL());
         // Quickndirty: disable console.warn globally
         let oldConsoleWarn = console.warn;
         window["console"]["warn"] = () => {};
         this.render.pixi.app.loader.load((loader, resources) => {
             // enable it as soon as loader callback is called.
             // WHY? bc pixi.js does not provide any option to disable duplicate
-            // texture warnings on load and its annoying.
+            // texture warnings on load and it's annoying.
             window["console"]["warn"] = oldConsoleWarn;
             this.render.pixi.resources = resources;
             loadCallback();
@@ -287,25 +296,29 @@ class MatrixRenderer {
         this.render.pixi.app = new PIXI.Application({
             autoStart: false,
             backgroundColor: this.options.backgroundColor,
+            clearBeforeRender: true,
+            height: this.options.screen.height,
             sharedLoader: false,
             sharedTicker: false,
-            view: this.options.canvasElement
+            view: this.options.canvasElement,
+            width: this.options.screen.width,
         });
+        this.render.pixi.app.stage.interactiveChildren = false;
+        this.render.pixi.app.stage.removeChildren();
         this.render.pixi.app.ticker.minFPS = 1;
         this.render.pixi.app.ticker.maxFPS = this.options.fps;
         document.body.style.backgroundColor = PIXI.utils.hex2string(this.options.backgroundColor);
-        this.render.pixi.app.renderer.resize(this.options.screen.width, this.options.screen.height);
         this.render.count.cols = Math.floor(this.options.screen.width / this.options.font.size);
         this.render.count.rows = Math.floor(this.options.screen.height / this.options.font.size);
         this._buildTextRange();
         this._buildTextCols(true);
-        this.render.pixi.app.stage.removeChildren();
         this._createLetterTextures(() => {
             for (let c = 0; c < this.render.count.cols; c++) {
                 for (let r = 0; r < this.render.count.rows; r++) {
                     let sprite = new PIXI.Sprite(this.render.pixi.resources['l_blank'].texture);
                     sprite.x = c * this.options.font.size;
                     sprite.y = r * this.options.font.size;
+                    sprite.interactiveChildren = false;
                     this.render.pixi.app.stage.addChild(sprite);
                 }
             }
@@ -346,23 +359,26 @@ class MatrixRenderer {
             } else {
                 for (r = 0; r < this.render.count.rows; r++) {
                     let sprite = this.render.pixi.app.stage.getChildAt(c * this.render.count.rows + r);
-                    let color = 1;//this.options.font.color.default;
+                    let color = this.options.style.column.color;
+                    // let base = 0xFF * (c / this.render.count.cols);
+                    // color = base * 0x10000 + base * 0x100 + base;
                     let alpha = 1.0;
-                    if (txtc.loops % this.render.count.rows == r && txtc.loops < this.render.count.rows) {
+                    if (txtc.loops % this.render.count.rows == r && txtc.loops < this.render.count.rows && this.options.style.highlight.enabled) {
                         // highlight character
-                        color = 0;//this.options.font.color.highlight;
+                        color = this.options.style.highlight.color;
                     } else if (txtc.loops > txtc.dropLength + 4 + r) {
                         // if dropLength + 4 + row < loops happened
                         sprite.texture = this.render.pixi.resources["l_blank"].texture;
                         continue;
-                    } else if (txtc.loops > txtc.dropLength + r && txtc.loops <= txtc.dropLength + 4 + r) {
-                        color = 2;//this.options.font.color.showoff;
+                    } else if (txtc.loops > txtc.dropLength + r && txtc.loops <= txtc.dropLength + 4 + r && this.options.style.showoff.enabled) {
+                        color = this.options.style.showoff.color;
                     }
                     if (this.options.columnAlphaFade) {
                         alpha = 1 - (txtc.loops - r) / (txtc.dropLength + 4);
                     }
                     sprite.alpha = alpha;
-                    sprite.texture = this.render.pixi.resources["l_" + color + "_" + txtc.data.charCodeAt(r)].texture;
+                    sprite.tint = color;
+                    sprite.texture = this.render.pixi.resources["l_" + txtc.data.charCodeAt(r)].texture;
                     if (txtc.loops % this.render.count.rows == r && txtc.loops < this.render.count.rows) {
                         break;
                     }
@@ -425,16 +441,8 @@ class MatrixRenderer {
         ].includes(opt)) {
             this.render.shouldRestartNextFrame = true;
         } else if ([
-            "font.color.highlight",
-            "font.color.default",
-            "font.color.showoff",
             "font.family",
         ].includes(opt)) {
-            // let isPausedCache = this.render.isPaused;
-            // this.render.isPaused = true;
-            // this._createLetterTextures(() => {
-            //     this.render.isPaused = isPausedCache;
-            // });
             this.render.shouldCreateLetterTexturesNextFrame = true;
         }
     }
