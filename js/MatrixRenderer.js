@@ -216,8 +216,24 @@ class MatrixRenderer {
       
         return retText;
     }
-    _randomTextCol(isInit = false) {
+    _randomTextCol(c, isInit = false) {
+        let color = this.options.style.column.color;
+        if (this.options.style.column.mode == 2) {
+            // Horizontal Gradient
+            let c1 = PIXI.utils.hex2rgb(this.options.style.column.color1);
+            let c2 = PIXI.utils.hex2rgb(this.options.style.column.color2);
+            let ctmp = [
+                c1[0] + (c / this.render.count.cols) * (c2[0] - c1[0]), // red
+                c1[1] + (c / this.render.count.cols) * (c2[1] - c1[1]), // green
+                c1[2] + (c / this.render.count.cols) * (c2[2] - c1[2]), // blue
+            ];
+            color = PIXI.utils.rgb2hex(ctmp);
+        } else if (this.options.style.column.mode == 4) {
+            // Random
+            color = Math.random() * 0xFFFFFF;
+        }
         return {
+            color: color,
             data: this._randomTextFromRange(this.render.count.rows, this.render.textRange),
             delayedLoops: Math.floor(Math.random() * 140) % (isInit ? 135 : 40),
             dropLength: Math.floor(this.render.count.rows * this.options.screen.rainDropFactor),
@@ -226,7 +242,7 @@ class MatrixRenderer {
     }
     _buildTextCols(isInit = false) {
         for (let c = 0; c < this.render.count.cols; c++) {
-            this.render.textcols[c] = this._randomTextCol(isInit);
+            this.render.textcols[c] = this._randomTextCol(c, isInit);
         }
     }
     _changeTextFromTextCols() {
@@ -350,18 +366,33 @@ class MatrixRenderer {
     // draw matrix
     _updateMatrix() {
         let r, c, txtc;
+        let mode3enabled = this.options.style.column.mode == 3, mode3colors = [];
+        if (mode3enabled) {
+            // Calculate Vertical Gradient only once per row per column to save frame time.
+            for (r = 0; r < this.render.count.rows; r++) {
+                let c1 = PIXI.utils.hex2rgb(this.options.style.column.color1);
+                let c2 = PIXI.utils.hex2rgb(this.options.style.column.color2);
+                let ctmp = [
+                    c1[0] + (r / this.render.count.rows) * (c2[0] - c1[0]), // red
+                    c1[1] + (r / this.render.count.rows) * (c2[1] - c1[1]), // green
+                    c1[2] + (r / this.render.count.rows) * (c2[2] - c1[2]), // blue
+                ];
+                mode3colors.push(PIXI.utils.rgb2hex(ctmp));
+            }
+        }
         for (c = 0; c < this.render.count.cols; c++) {
             txtc = this.render.textcols[c];
             if (txtc.delayedLoops > 0) {
                 txtc.delayedLoops--;
             } else if (txtc.loops > txtc.dropLength + this.render.count.rows + 4) {
-                this.render.textcols[c] = this._randomTextCol(false);
+                this.render.textcols[c] = this._randomTextCol(c, false);
             } else {
                 for (r = 0; r < this.render.count.rows; r++) {
                     let sprite = this.render.pixi.app.stage.getChildAt(c * this.render.count.rows + r);
-                    let color = this.options.style.column.color;
-                    // let base = 0xFF * (c / this.render.count.cols);
-                    // color = base * 0x10000 + base * 0x100 + base;
+                    let color = txtc.color;
+                    if (mode3enabled) {
+                        color = mode3colors[r];
+                    }
                     let alpha = 1.0;
                     if (txtc.loops % this.render.count.rows == r && txtc.loops < this.render.count.rows && this.options.style.highlight.enabled) {
                         // highlight character
@@ -488,7 +519,6 @@ class MatrixRenderer {
             this.render.pixi.app.loader.destroy();
             this.render.pixi.app.stage.removeChildren();
             this.render.pixi.app.render();
-            this.render.pixi.app.stop();
             this.render.pixi.app.destroy(false, true);
             PIXI.utils.clearTextureCache();
             PIXI.utils.destroyTextureCache();

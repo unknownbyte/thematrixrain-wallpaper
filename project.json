@@ -36,16 +36,16 @@
 			"en-us" : 
 			{
 				"ui_appearance_background_color" : "Color",
-				"ui_appearance_background_subheading": "<b>Background</b>",
-				"ui_appearance_column_subheading": "<b>Column</b>",
+				"ui_appearance_background_mode": "<b>Background</b>",
 				"ui_appearance_column_color": "Color (Scheme)",
 				"ui_appearance_column_color1": "Color 1",
 				"ui_appearance_column_color2": "Color 2",
-				"ui_appearance_column_random_note": "<i>Note: The algorithm will not select colors which are near to your background, highlight (if enabled) or showoff (if enabled) color to avoid disappearing columns.</i>",
-				"ui_appearance_showoff_subheading": "<b>Showoff</b>",
+				"ui_appearance_column_mode": "<b>Column</b>",
+				"ui_appearance_column_random_note": "<i>Note: The algorithm takes a random color per column. This works best with a dark background.</i>",
 				"ui_appearance_showoff_color": "Color",
-				"ui_appearance_highlight_subheading": "<b>Highlight</b>",
+				"ui_appearance_showoff_enabled": "<b>Showoff</b>",
 				"ui_appearance_highlight_color": "Color",
+				"ui_appearance_highlight_enabled": "<b>Highlight</b>",
 				"ui_appearance_heading" : "<h3>Appearance</h3>",
 				"ui_character_fontfamily" : "Font family",
 				"ui_character_fontsize" : "Font size",
@@ -68,7 +68,7 @@
 				"ui_movementbehaviour_rain_drop_factor" : "Rain drop length<br>(% of screen height)",
 				"ui_z_heading" : "<br>--- --- --- --- ---",
 				"ui_z_scode_chlogs" : "<a href='https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087'>Changelog</a> | <a href='https://github.com/unknownbyte/thematrixrain-wallpaper'>Source code</a>",
-				"ui_z_version" : "<i>Version 0.7.0.alpha1 | 2020-03-28</i>"
+				"ui_z_version" : "<i>Version 0.7.0.alpha2 | 2020-03-30</i>"
 			}
 		},
 		"properties" : 
@@ -80,14 +80,14 @@
 				"type" : "color",
 				"value" : "0 0 0"
 			},
-			"appearance_background_subheading" : 
+			"appearance_background_mode" : 
 			{
 				"order" : 110,
-				"text" : "ui_appearance_background_subheading",
+				"text" : "ui_appearance_background_mode",
 				"type" : "text",
 				"value" : ""
 			},
-			"appearance_column_subheading" : 
+			"appearance_column_mode" : 
 			{
 				"options" : 
 				[
@@ -109,59 +109,59 @@
 					}
 				],
 				"order" : 120,
-				"text" : "ui_appearance_column_subheading",
+				"text" : "ui_appearance_column_mode",
 				"type" : "combo",
 				"value" : 1
 			},
 			"appearance_column_color1" : 
 			{
-				"condition": "appearance_column_subheading.value == 2 || appearance_column_subheading.value == 3",
+				"condition": "appearance_column_mode.value == 2 || appearance_column_mode.value == 3",
 				"order" : 122,
 				"text" : "ui_appearance_column_color1",
 				"type" : "color",
-				"value" : "0.2 1 0.67"
+				"value" : "0 0.34 1"
 			},
 			"appearance_column_color2" : 
 			{
-				"condition": "appearance_column_subheading.value == 2 || appearance_column_subheading.value == 3",
+				"condition": "appearance_column_mode.value == 2 || appearance_column_mode.value == 3",
 				"order" : 123,
 				"text" : "ui_appearance_column_color2",
 				"type" : "color",
-				"value" : "0.2 1 0.67"
+				"value" : "0.63 1 0"
 			},
 			"appearance_column_random_note" : 
 			{
-				"condition": "appearance_column_subheading.value == 4",
+				"condition": "appearance_column_mode.value == 4",
 				"order" : 124,
 				"text" : "ui_appearance_column_random_note",
 				"type" : "text",
 				"value" : ""
 			},
-			"appearance_highlight_subheading" : 
+			"appearance_highlight_enabled" : 
 			{
 				"order" : 130,
-				"text" : "ui_appearance_highlight_subheading",
+				"text" : "ui_appearance_highlight_enabled",
 				"type" : "bool",
 				"value" : true
 			},
 			"appearance_highlight_color" : 
 			{
-				"condition": "appearance_highlight_subheading.value == true",
+				"condition": "appearance_highlight_enabled.value == true",
 				"order" : 131,
 				"text" : "ui_appearance_highlight_color",
 				"type" : "color",
 				"value" : "1 1 1"
 			},
-			"appearance_showoff_subheading" : 
+			"appearance_showoff_enabled" : 
 			{
 				"order" : 140,
-				"text" : "ui_appearance_showoff_subheading",
+				"text" : "ui_appearance_showoff_enabled",
 				"type" : "bool",
 				"value" : true
 			},
-			"appearance_fontcolorshowoff" : 
+			"appearance_showoff_color" : 
 			{
-				"condition": "appearance_showoff_subheading.value == true",
+				"condition": "appearance_showoff_enabled.value == true",
 				"order" : 141,
 				"text" : "ui_appearance_showoff_color",
 				"type" : "color",
@@ -351,7 +351,7 @@
 			},
 			"schemecolor" : 
 			{
-				"condition": "appearance_column_subheading.value == 1",
+				"condition": "appearance_column_mode.value == 1",
 				"order" : 121,
 				"text" : "ui_appearance_column_color",
 				"type" : "color",

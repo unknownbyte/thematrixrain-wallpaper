@@ -27,8 +27,8 @@ window.wallpaperPropertyListener = {
         if (properties.appearance_background_color) {
             mr.options.backgroundColor = getHex(properties.appearance_background_color.value);
         }
-        if (properties.appearance_column_subheading) {
-            mr.options.style.column.mode = properties.appearance_column_subheading.value;
+        if (properties.appearance_column_mode) {
+            mr.options.style.column.mode = properties.appearance_column_mode.value;
         }
         if (properties.schemecolor) {
             mr.options.style.column.color = getHex(properties.schemecolor.value);
@@ -39,14 +39,14 @@ window.wallpaperPropertyListener = {
         if (properties.appearance_column_color2) {
             mr.options.style.column.color2 = getHex(properties.appearance_column_color2.value);
         }
-        if (properties.appearance_highlight_subheading) {
-            mr.options.style.highlight.enabled = properties.appearance_highlight_subheading.value;
+        if (properties.appearance_highlight_enabled) {
+            mr.options.style.highlight.enabled = properties.appearance_highlight_enabled.value;
         }
         if (properties.appearance_highlight_color) {
             mr.options.style.highlight.color = getHex(properties.appearance_highlight_color.value);
         }
-        if (properties.appearance_showoff_subheading) {
-            mr.options.style.showoff.enabled = properties.appearance_showoff_subheading.value;
+        if (properties.appearance_showoff_enabled) {
+            mr.options.style.showoff.enabled = properties.appearance_showoff_enabled.value;
         }
         if (properties.appearance_showoff_color) {
             mr.options.style.showoff.color = getHex(properties.appearance_showoff_color.value);
