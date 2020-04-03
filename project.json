@@ -18,8 +18,10 @@
 				"ui_character_fontsize_note" : "<i>Hinweis: Die ausgewählte Schriftgröße kann zu Performance-Problemen führen, speziell bei älteren und schwachen PCs.</i><br><br>",
 				"ui_character_heading" : "<h3>Zeicheneinstellungen</h3>",
 				"ui_character_textprefs_binary" : "Binär (0-1):",
+				"ui_character_textprefs_chinese" : "Chinesisch (CJK):",
 				"ui_character_textprefs_cyrillic" : "Kyrillische Zeichen:",
 				"ui_character_textprefs_hex" : "Hexadezimal (0-9 & A-F):",
+				"ui_character_textprefs_japanese" : "Japanisch:",
 				"ui_character_textprefs_letterslowercase" : "Kleinbuchstaben:",
 				"ui_character_textprefs_lettersuppercase" : "Großbuchstaben:",
 				"ui_character_textprefs_nosetselected" : "<i>Hinweis: Fallbackset \"?\" wird benutzt.</i>",
@@ -52,8 +54,10 @@
 				"ui_character_fontsize_note" : "<i>Note: Your selected font size may cause performance issues, especially on older or low-end PCs.</i><br><br>",
 				"ui_character_heading" : "<h3>Character Settings</h3>",
 				"ui_character_textprefs_binary" : "Binary (0-1):",
+				"ui_character_textprefs_chinese" : "Chinese (CJK):",
 				"ui_character_textprefs_cyrillic" : "Cyrillic letters:",
 				"ui_character_textprefs_hex" : "Hexadecimal (0-9 & A-F):",
+				"ui_character_textprefs_japanese" : "Japanese:",
 				"ui_character_textprefs_letterslowercase" : "Letters lower case:",
 				"ui_character_textprefs_lettersuppercase" : "Letters upper case:",
 				"ui_character_textprefs_nosetselected" : "<i>Note: Fallback set \"?\" is being used.</i>",
@@ -68,7 +72,7 @@
 				"ui_movementbehaviour_rain_drop_factor" : "Rain drop length<br>(% of screen height)",
 				"ui_z_heading" : "<br>--- --- --- --- ---",
 				"ui_z_scode_chlogs" : "<a href='https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087'>Changelog</a> | <a href='https://github.com/unknownbyte/thematrixrain-wallpaper'>Source code</a>",
-				"ui_z_version" : "<i>Version 0.7.0.alpha2 | 2020-03-30</i>"
+				"ui_z_version" : "<i>Version 0.7.0.alpha3 | 2020-04-03</i>"
 			}
 		},
 		"properties" : 
@@ -244,9 +248,16 @@
 				"type" : "bool",
 				"value" : false
 			},
+			"character_textprefs_chinese" : 
+			{
+				"order" : 229,
+				"text" : "ui_character_textprefs_chinese",
+				"type" : "bool",
+				"value" : false
+			},
 			"character_textprefs_cyrillic" : 
 			{
-				"order" : 227,
+				"order" : 228,
 				"text" : "ui_character_textprefs_cyrillic",
 				"type" : "bool",
 				"value" : true
@@ -255,6 +266,13 @@
 			{
 				"order" : 225,
 				"text" : "ui_character_textprefs_hex",
+				"type" : "bool",
+				"value" : false
+			},
+			"character_textprefs_japanese" : 
+			{
+				"order" : 230,
+				"text" : "ui_character_textprefs_japanese",
 				"type" : "bool",
 				"value" : false
 			},
@@ -274,8 +292,8 @@
 			},
 			"character_textprefs_nosetselected" : 
 			{
-				"condition" : "!character_textprefs_letterslowercase.value && !character_textprefs_lettersuppercase.value && !character_textprefs_numbers.value && !character_textprefs_binary.value && !character_textprefs_hex.value && !character_textprefs_octal.value && !character_textprefs_specialchars.value && !character_textprefs_cyrillic.value",
-				"order" : 229,
+				"condition" : "!character_textprefs_letterslowercase.value && !character_textprefs_lettersuppercase.value && !character_textprefs_numbers.value && !character_textprefs_binary.value && !character_textprefs_hex.value && !character_textprefs_octal.value && !character_textprefs_specialchars.value && !character_textprefs_cyrillic.value && !character_textprefs_chinese.value && !character_textprefs_japanese.value",
+				"order" : 231,
 				"text" : "ui_character_textprefs_nosetselected",
 				"type" : "text",
 				"value" : ""
@@ -296,7 +314,7 @@
 			},
 			"character_textprefs_specialchars" : 
 			{
-				"order" : 228,
+				"order" : 227,
 				"text" : "ui_character_textprefs_specialchars",
 				"type" : "bool",
 				"value" : true

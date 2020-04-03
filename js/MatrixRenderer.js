@@ -139,8 +139,10 @@ class MatrixRenderer {
             },
             textRange: new Proxy({
                 binary: false,
+                chinese: false,
                 cyrillic: true,
                 hex: false,
+                japanese: false,
                 lettersLowerCase: true,
                 lettersUpperCase: true,
                 numbers: true,
@@ -185,11 +187,30 @@ class MatrixRenderer {
         };
     }
     
+    /**
+     * Gets a unicode range from start to end.
+     * @param {number} start The beginning of the range (inclusive)
+     * @param {number} end The end of the range (exclusive)
+     * @param {Array.<number>} [exclude] Characters to exclude from the output
+     * @returns {string}
+     */
+    _getUnicodeRange(start, end, exclude = []) {
+        let ret = "";
+        for (let c = start; c < end; c++) {
+            if (exclude.includes(c)) {
+                continue;
+            }
+            ret += String.fromCharCode(c);
+        }
+        return ret;
+    }
     _buildTextRange() {
         const textSets = {
             binary:             "01",
+            chinese:            this._getUnicodeRange(0x2E80, 0x2EF3) + this._getUnicodeRange(0x2F00, 0x2FD5),
             cyrillic:           "аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ",
             hex:                "0123456789ABCDEF",
+            japanese:           this._getUnicodeRange(0x3040, 0x31F0, [0x3040, 0x3097, 0x3098, 0x3099, 0x309A, 0x309B, 0x309C, 0x30FB, 0x30FC, 0x30FD, 0x30FE]),
             lettersLowerCase:   "abcdefghijklmnopqrstuvwxyz",
             lettersUpperCase:   "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
             numbers:            "0123456789",

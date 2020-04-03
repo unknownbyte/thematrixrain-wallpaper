@@ -66,11 +66,17 @@ window.wallpaperPropertyListener = {
         if (properties.character_textprefs_binary) {
             mr.options.textRange.binary = properties.character_textprefs_binary.value;
         }
+        if (properties.character_textprefs_chinese) {
+            mr.options.textRange.chinese = properties.character_textprefs_chinese.value;
+        }
         if (properties.character_textprefs_cyrillic) {
             mr.options.textRange.cyrillic = properties.character_textprefs_cyrillic.value;
         }
         if (properties.character_textprefs_hex) {
             mr.options.textRange.hex = properties.character_textprefs_hex.value;
+        }
+        if (properties.character_textprefs_japanese) {
+            mr.options.textRange.japanese = properties.character_textprefs_japanese.value;
         }
         if (properties.character_textprefs_letterslowercase) {
             mr.options.textRange.lettersLowerCase = properties.character_textprefs_letterslowercase.value;
