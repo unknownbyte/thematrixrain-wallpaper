@@ -1,6 +1,6 @@
 {
 	"contentrating" : "Everyone",
-	"description" : "An infinite, widely customizable matrix code rain for your desktop.\r\n\r\n[h1]Features[/h1]\r\n[list]\r\n    [*]Customize the style of both back- and foreground\r\n    [*]Choose from different character sets: Latin, Numbers, Binary, Hexadecimal, Octal, Special Characters, Cyrillic\r\n    [*]Set the speed and size of the rain\r\n    [*]Set the font family of the rain\r\n    [*]Fade out rain drops\r\n[/list]\r\n\r\nIf you experience any problems with this wallpaper or you have a feature request, feel free to comment!\r\n\r\n--- --- --- --- ---\r\n[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087]Changelog[/url] | [url=https://github.com/unknownbyte/thematrixrain-wallpaper]Source code[/url]",
+	"description" : "An infinite, widely customizable matrix code rain for your desktop.\r\n\r\n[h1]Features[/h1]\r\n[list]\r\n    [*]Customize the style of both back- and foreground\r\n    [*]Choose from different character sets: Latin (upper/lower case), Numbers, Binary, Hexadecimal, Octal, Special Characters, Cyrillic\r\n    [*]Set the speed and size of the rain\r\n    [*]Set the font family of the rain\r\n    [*]Fade out rain drops\r\n[/list]\r\n\r\nIf you experience any problems with this wallpaper or you have a feature request, feel free to comment!\r\n\r\n--- --- --- --- ---\r\nThis wallpaper uses the awesome [url=https://www.pixijs.com/]PixiJS[/url] library for rendering the matrix. Be sure to check out their project!\r\nPixiJS is licensed under the [url=https://github.com/pixijs/pixi.js/blob/dev/LICENSE]MIT license[/url].\r\n\r\n--- --- --- --- ---\r\n[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087]Changelog[/url] | [url=https://github.com/unknownbyte/thematrixrain-wallpaper]Source code[/url]",
 	"file" : "index.html",
 	"general" : 
 	{
@@ -8,11 +8,23 @@
 		{
 			"de-de" : 
 			{
-				"ui_appearance_backgroundcolor" : "Hintergrundfarbe",
-				"ui_appearance_fontcolor" : "Schriftfarbe",
-				"ui_appearance_fontcolorhighlight" : "Schriftfarbe Highlight",
-				"ui_appearance_fontcolorshowoff" : "Schriftfarbe Showoff",
+				"ui_appearance_background_color" : "Farbe",
+				"ui_appearance_background_mode" : "<b>Hintergrund</b>",
+				"ui_appearance_column_color" : "Farbe (Scheme)",
+				"ui_appearance_column_color1" : "Farbe 1",
+				"ui_appearance_column_color2" : "Farbe 2",
+				"ui_appearance_column_mode" : "<b>Spalte</b>",
+				"ui_appearance_column_mode_gradienth" : "Farbverlauf (Horizontal)",
+				"ui_appearance_column_mode_gradientv" : "Farbverlauf (Vertikal)",
+				"ui_appearance_column_mode_random" : "Zufällig per Spalte",
+				"ui_appearance_column_mode_singlecolor" : "Einzelfarbe",
+				"ui_appearance_column_random_note" : "<i>Hinweis: Der Algorithmus generiert eine zufällige Farbe pro Spalte. Dies funktioniert am besten auf einem dunklen Hintergund.</i>",
 				"ui_appearance_heading" : "<h3>Darstellung</h3>",
+				"ui_appearance_highlight_color" : "Farbe",
+				"ui_appearance_highlight_enabled" : "<b>Highlight</b>",
+				"ui_appearance_tail_color" : "Farbe",
+				"ui_appearance_tail_enabled" : "<b>Tropfenende</b>",
+				"ui_appearance_tail_note" : "<i>Hinweis: Da 'Regentropfen abschwächen' in Bewegungsverhalten aktiviert ist, kann die Regentropfenfarbe nicht angezeigt werden. Deaktivierte diese Option um die Farbe vom Tropfenende setzen zu können!</i>",
 				"ui_character_fontfamily" : "Schriftart",
 				"ui_character_fontsize" : "Schriftgröße",
 				"ui_character_fontsize_note" : "<i>Hinweis: Die ausgewählte Schriftgröße kann zu Performance-Problemen führen, speziell bei älteren und schwachen PCs.</i><br><br>",
@@ -38,17 +50,22 @@
 			"en-us" : 
 			{
 				"ui_appearance_background_color" : "Color",
-				"ui_appearance_background_mode": "<b>Background</b>",
-				"ui_appearance_column_color": "Color (Scheme)",
-				"ui_appearance_column_color1": "Color 1",
-				"ui_appearance_column_color2": "Color 2",
-				"ui_appearance_column_mode": "<b>Column</b>",
-				"ui_appearance_column_random_note": "<i>Note: The algorithm takes a random color per column. This works best with a dark background.</i>",
-				"ui_appearance_showoff_color": "Color",
-				"ui_appearance_showoff_enabled": "<b>Showoff</b>",
-				"ui_appearance_highlight_color": "Color",
-				"ui_appearance_highlight_enabled": "<b>Highlight</b>",
+				"ui_appearance_background_mode" : "<b>Background</b>",
+				"ui_appearance_column_color" : "Color (Scheme)",
+				"ui_appearance_column_color1" : "Color 1",
+				"ui_appearance_column_color2" : "Color 2",
+				"ui_appearance_column_mode" : "<b>Column</b>",
+				"ui_appearance_column_mode_gradienth" : "Gradient (Horizontal)",
+				"ui_appearance_column_mode_gradientv" : "Gradient (Vertical)",
+				"ui_appearance_column_mode_random" : "Random per column",
+				"ui_appearance_column_mode_singlecolor" : "Single color",
+				"ui_appearance_column_random_note" : "<i>Note: The algorithm takes a random color per column. This works best with a dark background.</i>",
 				"ui_appearance_heading" : "<h3>Appearance</h3>",
+				"ui_appearance_highlight_color" : "Color",
+				"ui_appearance_highlight_enabled" : "<b>Highlight</b>",
+				"ui_appearance_tail_color" : "Color",
+				"ui_appearance_tail_enabled" : "<b>Drop tail</b>",
+				"ui_appearance_tail_note" : "<i>Note: You have enabled the option to fade out rain drops, which means the drop tail color is nearly invisible. To enable the drop tail uncheck 'Fade out rain drops´' in Movement Behaviour!</i>",
 				"ui_character_fontfamily" : "Font family",
 				"ui_character_fontsize" : "Font size",
 				"ui_character_fontsize_note" : "<i>Note: Your selected font size may cause performance issues, especially on older or low-end PCs.</i><br><br>",
@@ -72,7 +89,7 @@
 				"ui_movementbehaviour_rain_drop_factor" : "Rain drop length<br>(% of screen height)",
 				"ui_z_heading" : "<br>--- --- --- --- ---",
 				"ui_z_scode_chlogs" : "<a href='https://steamcommunity.com/sharedfiles/filedetails/changelog/1418165087'>Changelog</a> | <a href='https://github.com/unknownbyte/thematrixrain-wallpaper'>Source code</a>",
-				"ui_z_version" : "<i>Version 0.7.0.alpha3 | 2020-04-03</i>"
+				"ui_z_version" : "<i>Version 0.7.0 | 2020-04-03</i>"
 			}
 		},
 		"properties" : 
@@ -91,24 +108,40 @@
 				"type" : "text",
 				"value" : ""
 			},
+			"appearance_column_color1" : 
+			{
+				"condition" : "appearance_column_mode.value == 2 || appearance_column_mode.value == 3",
+				"order" : 122,
+				"text" : "ui_appearance_column_color1",
+				"type" : "color",
+				"value" : "0 0.34 1"
+			},
+			"appearance_column_color2" : 
+			{
+				"condition" : "appearance_column_mode.value == 2 || appearance_column_mode.value == 3",
+				"order" : 123,
+				"text" : "ui_appearance_column_color2",
+				"type" : "color",
+				"value" : "0.63 1 0"
+			},
 			"appearance_column_mode" : 
 			{
 				"options" : 
 				[
 					{
-						"label" : "Single Color",
+						"label" : "ui_appearance_column_mode_singlecolor",
 						"value" : 1
 					},
 					{
-						"label" : "Gradient (Horizontal)",
+						"label" : "ui_appearance_column_mode_gradienth",
 						"value" : 2
 					},
 					{
-						"label" : "Gradient (Vertical)",
+						"label" : "ui_appearance_column_mode_gradientv",
 						"value" : 3
 					},
 					{
-						"label" : "Random per column",
+						"label" : "ui_appearance_column_mode_random",
 						"value" : 4
 					}
 				],
@@ -117,29 +150,28 @@
 				"type" : "combo",
 				"value" : 1
 			},
-			"appearance_column_color1" : 
-			{
-				"condition": "appearance_column_mode.value == 2 || appearance_column_mode.value == 3",
-				"order" : 122,
-				"text" : "ui_appearance_column_color1",
-				"type" : "color",
-				"value" : "0 0.34 1"
-			},
-			"appearance_column_color2" : 
-			{
-				"condition": "appearance_column_mode.value == 2 || appearance_column_mode.value == 3",
-				"order" : 123,
-				"text" : "ui_appearance_column_color2",
-				"type" : "color",
-				"value" : "0.63 1 0"
-			},
 			"appearance_column_random_note" : 
 			{
-				"condition": "appearance_column_mode.value == 4",
+				"condition" : "appearance_column_mode.value == 4",
 				"order" : 124,
 				"text" : "ui_appearance_column_random_note",
 				"type" : "text",
 				"value" : ""
+			},
+			"appearance_heading" : 
+			{
+				"order" : 100,
+				"text" : "ui_appearance_heading",
+				"type" : "text",
+				"value" : ""
+			},
+			"appearance_highlight_color" : 
+			{
+				"condition" : "appearance_highlight_enabled.value == true",
+				"order" : 131,
+				"text" : "ui_appearance_highlight_color",
+				"type" : "color",
+				"value" : "1 1 1"
 			},
 			"appearance_highlight_enabled" : 
 			{
@@ -148,33 +180,26 @@
 				"type" : "bool",
 				"value" : true
 			},
-			"appearance_highlight_color" : 
+			"appearance_tail_color" : 
 			{
-				"condition": "appearance_highlight_enabled.value == true",
-				"order" : 131,
-				"text" : "ui_appearance_highlight_color",
-				"type" : "color",
-				"value" : "1 1 1"
-			},
-			"appearance_showoff_enabled" : 
-			{
-				"order" : 140,
-				"text" : "ui_appearance_showoff_enabled",
-				"type" : "bool",
-				"value" : true
-			},
-			"appearance_showoff_color" : 
-			{
-				"condition": "appearance_showoff_enabled.value == true",
+				"condition" : "appearance_tail_enabled.value && !movementbehaviour_columnalphafade.value",
 				"order" : 141,
-				"text" : "ui_appearance_showoff_color",
+				"text" : "ui_appearance_tail_color",
 				"type" : "color",
 				"value" : "0.47 0.47 0.47"
 			},
-			"appearance_heading" : 
+			"appearance_tail_enabled" : 
 			{
-				"order" : 100,
-				"text" : "ui_appearance_heading",
+				"order" : 140,
+				"text" : "ui_appearance_tail_enabled",
+				"type" : "bool",
+				"value" : false
+			},
+			"appearance_tail_note" : 
+			{
+				"condition" : "appearance_tail_enabled.value && movementbehaviour_columnalphafade.value",
+				"order" : 142,
+				"text" : "ui_appearance_tail_note",
 				"type" : "text",
 				"value" : ""
 			},
@@ -211,7 +236,7 @@
 						"value" : 7
 					}
 				],
-				"order" : 211,
+				"order" : 411,
 				"text" : "ui_character_fontfamily",
 				"type" : "combo",
 				"value" : 3
@@ -221,7 +246,7 @@
 				"editable" : true,
 				"max" : 25,
 				"min" : 6,
-				"order" : 212,
+				"order" : 412,
 				"text" : "ui_character_fontsize",
 				"type" : "slider",
 				"value" : 12
@@ -229,63 +254,63 @@
 			"character_fontsize_note" : 
 			{
 				"condition" : "character_fontsize.value <= 9",
-				"order" : 213,
+				"order" : 413,
 				"text" : "ui_character_fontsize_note",
 				"type" : "text",
 				"value" : ""
 			},
 			"character_heading" : 
 			{
-				"order" : 200,
+				"order" : 400,
 				"text" : "ui_character_heading",
 				"type" : "text",
 				"value" : ""
 			},
 			"character_textprefs_binary" : 
 			{
-				"order" : 224,
+				"order" : 424,
 				"text" : "ui_character_textprefs_binary",
 				"type" : "bool",
 				"value" : false
 			},
 			"character_textprefs_chinese" : 
 			{
-				"order" : 229,
+				"order" : 429,
 				"text" : "ui_character_textprefs_chinese",
 				"type" : "bool",
 				"value" : false
 			},
 			"character_textprefs_cyrillic" : 
 			{
-				"order" : 228,
+				"order" : 428,
 				"text" : "ui_character_textprefs_cyrillic",
 				"type" : "bool",
 				"value" : true
 			},
 			"character_textprefs_hex" : 
 			{
-				"order" : 225,
+				"order" : 425,
 				"text" : "ui_character_textprefs_hex",
 				"type" : "bool",
 				"value" : false
 			},
 			"character_textprefs_japanese" : 
 			{
-				"order" : 230,
+				"order" : 430,
 				"text" : "ui_character_textprefs_japanese",
 				"type" : "bool",
 				"value" : false
 			},
 			"character_textprefs_letterslowercase" : 
 			{
-				"order" : 221,
+				"order" : 421,
 				"text" : "ui_character_textprefs_letterslowercase",
 				"type" : "bool",
 				"value" : true
 			},
 			"character_textprefs_lettersuppercase" : 
 			{
-				"order" : 222,
+				"order" : 422,
 				"text" : "ui_character_textprefs_lettersuppercase",
 				"type" : "bool",
 				"value" : true
@@ -293,35 +318,35 @@
 			"character_textprefs_nosetselected" : 
 			{
 				"condition" : "!character_textprefs_letterslowercase.value && !character_textprefs_lettersuppercase.value && !character_textprefs_numbers.value && !character_textprefs_binary.value && !character_textprefs_hex.value && !character_textprefs_octal.value && !character_textprefs_specialchars.value && !character_textprefs_cyrillic.value && !character_textprefs_chinese.value && !character_textprefs_japanese.value",
-				"order" : 231,
+				"order" : 431,
 				"text" : "ui_character_textprefs_nosetselected",
 				"type" : "text",
 				"value" : ""
 			},
 			"character_textprefs_numbers" : 
 			{
-				"order" : 223,
+				"order" : 423,
 				"text" : "ui_character_textprefs_numbers",
 				"type" : "bool",
 				"value" : true
 			},
 			"character_textprefs_octal" : 
 			{
-				"order" : 226,
+				"order" : 426,
 				"text" : "ui_character_textprefs_octal",
 				"type" : "bool",
 				"value" : false
 			},
 			"character_textprefs_specialchars" : 
 			{
-				"order" : 227,
+				"order" : 427,
 				"text" : "ui_character_textprefs_specialchars",
 				"type" : "bool",
 				"value" : true
 			},
 			"character_textprefs_subheading" : 
 			{
-				"order" : 220,
+				"order" : 420,
 				"text" : "ui_character_textprefs_subheading",
 				"type" : "text",
 				"value" : ""
@@ -369,11 +394,11 @@
 			},
 			"schemecolor" : 
 			{
-				"condition": "appearance_column_mode.value == 1",
+				"condition" : "appearance_column_mode.value == 1",
 				"order" : 121,
 				"text" : "ui_appearance_column_color",
 				"type" : "color",
-				"value" : "0.2 1 0.67"
+				"value" : "0.2 1 0.133"
 			},
 			"z_heading" : 
 			{

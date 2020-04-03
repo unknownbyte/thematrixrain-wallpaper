@@ -45,11 +45,11 @@ window.wallpaperPropertyListener = {
         if (properties.appearance_highlight_color) {
             mr.options.style.highlight.color = getHex(properties.appearance_highlight_color.value);
         }
-        if (properties.appearance_showoff_enabled) {
-            mr.options.style.showoff.enabled = properties.appearance_showoff_enabled.value;
+        if (properties.appearance_tail_enabled) {
+            mr.options.style.tail.enabled = properties.appearance_tail_enabled.value;
         }
-        if (properties.appearance_showoff_color) {
-            mr.options.style.showoff.color = getHex(properties.appearance_showoff_color.value);
+        if (properties.appearance_tail_color) {
+            mr.options.style.tail.color = getHex(properties.appearance_tail_color.value);
         }
 
 

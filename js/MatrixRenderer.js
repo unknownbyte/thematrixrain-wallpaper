@@ -14,7 +14,7 @@
  * @param {Object} initOptions Initial options for MatrixRenderer.
  */
 class MatrixRenderer {
-    constructor (initOptions = {}, isDebugEnabled = true) {
+    constructor (initOptions = {}, isDebugEnabled = false) {
         this.debug = new Proxy({
             _consoleLog: null,
             _consoleInfo: null,
@@ -123,8 +123,8 @@ class MatrixRenderer {
                     color2: 0xFFFFFF,
                     // possible modes:
                     // 1    - Single color
-                    // 2    - Gradient (vertical)
-                    // 3    - Gradient (horizontal)
+                    // 2    - Gradient (horizontal)
+                    // 3    - Gradient (vertical)
                     // 4    - Random
                     mode: 1,
                 },
@@ -132,7 +132,7 @@ class MatrixRenderer {
                     color: 0xFFFFFF,
                     enabled: true,
                 },
-                showoff: {
+                tail: {
                     color: 0x777777,
                     enabled: true,
                 },
@@ -422,8 +422,8 @@ class MatrixRenderer {
                         // if dropLength + 4 + row < loops happened
                         sprite.texture = this.render.pixi.resources["l_blank"].texture;
                         continue;
-                    } else if (txtc.loops > txtc.dropLength + r && txtc.loops <= txtc.dropLength + 4 + r && this.options.style.showoff.enabled) {
-                        color = this.options.style.showoff.color;
+                    } else if (txtc.loops > txtc.dropLength + r && txtc.loops <= txtc.dropLength + 4 + r && this.options.style.tail.enabled) {
+                        color = this.options.style.tail.color;
                     }
                     if (this.options.columnAlphaFade) {
                         alpha = 1 - (txtc.loops - r) / (txtc.dropLength + 4);
